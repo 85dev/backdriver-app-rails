@@ -1,0 +1,1042 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+//  COLORS & SIZES VARIABLES
+
+$primary-background-color: #181818;
+$secondary-background-color: #272727;
+$tertiary-background-color: #2f2c32;
+$fourthary-background-color: #3e3e3e;
+$fifth-background-color: #646464;
+
+$warning-color: red;
+$linking-color: rgb(144, 119, 255);
+$white-color: white;
+$black-color: black;
+
+$validation-color: rgb(31, 134, 29);
+$validation-color-hover: rgb(48, 153, 46);
+
+$primary-hover-color: rgb(0, 133, 11);
+$secondary-hover-color: rgb(255, 136, 0);
+
+$box-shadow-primary-color: rgba(100, 100, 111, 0.2);
+$box-shadow-secondary-color: rgba(109, 109, 109, 0.25);
+
+ body {
+   margin: 0 auto;
+   box-sizing: border-box;
+   background: $primary-background-color;
+   color: white;
+   font-family: 'Nunito', sans-serif;
+ }
+
+/* NAVIGATION BAR */
+
+#navbar {
+   border-radius: 2em;;
+   display: flex;
+   position: fixed;
+   align-items: center;
+   z-index: 1;
+   top: 90%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   padding-top: 0.2em;
+   flex-direction: row;
+   justify-content: space-between;
+   background-color: $secondary-background-color;
+   color: white;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 7px;
+   max-height: 68px; 
+}
+
+.navbar-part {
+   margin: 1.2em 0.6em;
+   padding-right: 1.6em;
+   padding-left: 1.6em;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+}
+
+/* TITLES, TEXTS, HR */
+
+h1 {
+   font-size: x-large;
+   font-weight: 700;
+   text-align: center;
+}
+
+h2 {
+   font-size: large;
+   font-weight: 500;
+}
+
+p {
+   font-size: medium;
+   font-weight: 300;
+}
+
+hr {
+   border-top: 1px solid rgb(209, 209, 209);
+   width: 100%;
+ }
+
+/* ALERTS & NOTICES */
+
+.alert {
+   margin: 6em 0em;
+   position: fixed;
+   font-weight: 500;
+   font-size: large;
+   border-radius: 0.2em;
+   padding: 0.4em 0.8em;
+   overflow: hidden;
+   top: -7%;
+   left: 82%;
+   color: rgb(255, 0, 0);
+   animation: fade-out 4s linear forwards;
+   animation-iteration-count: 1;
+}
+
+.notice {
+   margin: 6em 0em;
+   position: fixed;
+   font-weight: 500;
+   font-size: large;
+   border-radius: 0.2em;
+   padding: 0.4em 0.8em;
+   overflow: hidden;
+   top: -7%;
+   left: 82%;
+   color: white;
+   animation: fade-out 4s linear forwards;
+   animation-iteration-count: 1;
+}
+
+/* IMAGES / ICON / CHIP */
+
+.main-image {
+   width: 8em;
+   margin: 2em;
+}
+
+.secondary-image {
+   width: 10em;
+}
+
+
+.rounded-image{
+   border-radius: 50%;
+   & :hover {
+      transform: scale(1.1);
+      transition: 0.2s;
+   }
+}
+
+.primary-illustration {
+   width: 2em;
+   margin-right: 1em;
+}
+
+.primary-icon {
+   width: 8em;
+   &:hover {
+   transform: scale(1.03);
+   transition: 0.2s;
+   }
+}
+
+.secondary-icon {
+   width: 1.5em;
+   margin: 0.6em;
+   & :hover {
+      transform: scale(1.05);
+      transition: 0.2s;;
+   }
+}
+
+.navbar-icon {
+   width: 1.5em;
+   margin: 0.6em;
+   & :hover {
+      padding-bottom: 0.4em;
+      transition: 0.2s;;
+   }
+}
+
+.user-image-container {
+   width: 36px;
+   height: 36px;
+   overflow: hidden;
+   border-radius: 50%;
+   margin-bottom: 0.3em;
+}
+
+.navbar-user-image {
+   width: 100%;
+   height: 100%;
+   object-fit: cover; 
+}
+
+.icon-container {
+   position: relative;
+   display: inline-block;
+ }
+
+.tertiary-icon {
+   width: 2.5em;
+   margin: 0.6em;
+}
+
+.small-icon {
+   width: 1.6em;
+   & :hover {
+      transform: scale(1.1);
+      transition: 0.2s;;
+   }
+}
+
+.car-show-icon {
+   width: 2em;
+}
+
+.icon-container {
+   width: 95%;
+   display: flex;
+   justify-content: flex-end;
+}
+
+.notification-chip {
+   position: absolute;
+   top: 0;
+   left: 10px;
+   background-color: red;
+   border-radius: 1em;;
+}
+
+/* CONTAINER, CARDS, INPUT, FORM */
+
+.primary-centered {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   margin: 0 auto;
+   & select {
+      font-size: 1em;
+      font-family: "Nunito";
+   }
+   & input {
+      font-size: 1em;
+      font-family: "Nunito";
+      border-style: none;
+   }
+}
+
+.form-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin: 0.6em 0em;
+   & p {
+      margin: 0 auto;
+   }
+   & select {
+      font-size: 1em;
+      font-family: "Nunito";
+   }
+   & input {
+      font-size: 1em;
+      font-family: "Nunito";
+   }
+}
+
+#form-multiple-select {
+   padding: 0.5em 1em;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust the minmax values as needed */
+   gap: 10px; /* Adjust the gap as needed */
+   align-items: center;
+   margin-bottom: 1.5em;
+   & .checkbox-container {
+      display: flex;
+      align-items: center;
+   }
+}
+
+.global-primary-container {
+   margin: 2em 1.4em;
+   padding: 1em 0.8em;
+   background-color: $secondary-background-color;
+   color: white;
+   border-radius: 1em;
+   box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+   & h3 {
+      margin-left: 1em;
+      margin-top: em;
+   }
+   & p {
+      margin-left: 1em;
+   }
+}
+
+.global-secondary-container {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   margin: 2em 1.4em;
+   padding: 1em 0.8em;
+   background-color: $secondary-background-color;
+   color: white;
+   border-radius: 1em;
+   box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+   & h1 {
+   padding: 0.6em 0em;
+   }
+   & .primary-container {
+      margin-top: 0;
+   }
+}
+
+.index-car-grid-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, 300px);
+   grid-gap: 30px;
+   max-width: 1400px;
+   width: 95%;
+   height: auto;
+   margin: 0.6em 0.4em;
+}
+
+ .primary-container {
+    margin: 3em 0em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+ }
+
+ .cancel-container {
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+ }
+
+ .secondary-container {
+   margin: 2em 0em;
+   display: flex;
+   padding-top: 1em;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.width-container {
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   padding: 0.2em 1em;
+   border-radius: 0.5em;
+}
+
+.grid-card {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   background-color: $tertiary-background-color;
+   box-shadow: $box-shadow-primary-color 0px 7px 27px 0px;
+   border-radius: 0.5em;
+   & .grid-card-content {
+      padding: 0.6em 0.2em;
+   }
+}
+
+.grid-statistics-container {
+   padding-top: 1em;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, 300px);
+   justify-content: center;
+   grid-gap: 30px;
+   width: 90%;
+   height: auto;
+   margin: 0 auto;
+   margin-bottom: 1.5em;
+   & .statistics {
+      font-weight: bold;
+      font-size: 1.05em;
+   }
+}
+
+.chart-container {
+   text-align: center;
+   margin-bottom: 1.5em;
+}
+
+.primary-card {
+   display: flex;
+   flex-direction: column;
+   padding: 0.2em 1em;
+   background-color: $tertiary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   border-radius: 0.5em;
+   & h5 {
+      font-size: 0.9em;
+      font-weight: 500;
+   }
+}
+
+.index-car-card {
+   display: flex;
+   flex-direction: column;
+   background-color: $tertiary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   border-radius: 0.5em;
+   & .car-index-image {
+      border-top-right-radius: 0.2em;
+      border-top-left-radius: 0.2em;
+      max-width: fit-content;
+      overflow: hidden;
+      width: 100%; /* Adjust as needed */
+      height: 200px; /* Adjust as needed */
+      object-fit: cover;
+   }
+   & .align-items {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 0.8em;
+      margin-bottom: -1em;
+   }
+}
+
+.bottom-index-card-content {
+   padding: 0.2em 0.2em;
+}
+
+.form-card {
+   display: flex;
+   flex-direction: column;
+   width: 40%;
+   padding: 0.2em 1em;
+   margin-top: 1em;
+   background-color: $fourthary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   border-radius: 0.5em;
+   & p {
+      font-size: 1.05em;
+      font-weight: 300;
+   }
+}
+
+ .actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    font-family: 'Nunito', sans-serif;
+ }
+
+ .field {
+    margin: 1em;
+ }
+
+ .inline-mini-card {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+ }
+
+/* TABLES */
+
+table {
+   background-color: $secondary-background-color;
+   border-collapse: collapse;
+   margin: 1em 3em;
+   & .align-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+   }
+ }
+
+ th, td {
+   padding: 10px;
+   border: 1px solid $tertiary-background-color;
+ }
+
+.row-odd {
+   background-color: $primary-background-color;
+ }
+ 
+ .row-even {
+   background-color: $secondary-background-color;
+ }
+
+.icon-cell:last-child,
+.icon-cell:nth-child(3) {
+  width: 1em;
+  box-sizing: border-box;
+}
+
+/* TEXTS */
+
+.text-oneliner {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* BUTTON */
+
+ .primary-button {
+   text-align: center;
+   cursor: pointer;
+   position: relative;
+   border: none;
+   background-color: white;
+   text-decoration: none;
+   padding: 0.6em 1.4em;
+   border-radius: 10px;
+   color: black;
+   font-size: 0.85em;
+   font-weight: 500;
+   box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+   margin-top: 0.6em;
+   &:after {
+      content: '»';
+      position: absolute;
+      opacity: 0;  
+      top: 8px;
+      right: -20px;
+      transition: 0.5s;
+    }
+    &:hover {
+      transition: 0.25s;
+      padding-right: 24px;
+      padding-left:8px;
+    }
+    &:hover:after{
+      opacity: 1;
+      right: 10px;
+    }
+ }
+
+ .secondary-button {
+   background-color: $secondary-hover-color;
+   border: none;
+   text-decoration: none;
+   text-align: center;
+   border-radius: 10px;
+   padding: 0.4em 1em;
+   color: black;
+   border: none;
+   font-weight: 500;
+   font-size: small;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   margin-top: 0.6em;
+   margin-right: 1em;
+   &:hover {
+      margin-left: 0.1em;
+      transition: 0.3s;
+   }
+}
+
+.thirdary-button {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: $white-color;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+  box-sizing: border-box;
+  color: $black-color;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1em;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.5rem - 1px) calc(1.2rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.thirdary-button:hover,
+.thirdary-button:focus {
+  background-color: $linking-color;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.thirdary-button:hover {
+  transform: translateY(-3px);
+}
+
+.thirdary-button:active {
+  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.button-container {
+   display: flex;
+   justify-content: center;
+   flex-direction: row;
+   padding: 1em 0em;
+}
+
+.primary-button-icon {
+   padding: 1em 2em;
+}
+
+.secondary-button-icon {
+   padding: 0.3em 2em;
+}
+
+.warning-button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   background-color: $warning-color;
+   border-radius: 2em;
+   padding: 0.6em;
+   &:hover {
+      transition: 0.2s;
+      box-shadow: $box-shadow-secondary-color 0px 9px 29px 0px;
+   }
+}
+
+.icon-cell {
+   text-align: center; /* Center the content horizontally */
+ }
+
+.icon-button {
+   display: inline-block;
+   width: 2em;
+   &:hover {
+      transform: scale(1.1);
+      transition: 0.2s;
+   }
+}
+
+// DROPDOWN BUTTON
+
+.dropdown-container {
+   position: relative;
+   display: inline-block;
+ }
+ 
+ .dropdown-toggle {
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   & p {
+      padding-right: 0.5em;
+   }
+ }
+ 
+ .arrow {
+   font-size: 18px;
+   margin-right: 5px;
+   transition: transform 0.1s ease-in-out;
+   & .arrow-icon {
+      width: 0.6em;
+   }
+ }
+ 
+ .dropdown-menu {
+   display: none;
+   position: absolute;
+   z-index:1;
+   top: 100%;
+   left: 0;
+   background-color: $secondary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+ }
+ 
+ .dropdown-menu ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+ }
+ 
+ .dropdown-menu li {
+   display: flex;
+   align-items: center;
+   padding: 0em 0.6em;
+   width: fit-content;
+   cursor: pointer;
+ }
+ 
+ .dropdown-container.active .arrow {
+   transform: rotate(180deg);
+ }
+ 
+ .dropdown-container.active .dropdown-menu {
+   display: block;
+ }
+ 
+// CAR GRID 
+
+.title-with-image {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   margin: 0em 2.5em;
+}
+
+.sumup-car-infos {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, 280px);
+   justify-content: center;
+   grid-gap: 30px;
+   align-items: center;
+   flex-direction: row;
+   margin: 1em 1.8em;
+   & h3 {
+      font-weight: 500;
+   }
+}
+
+.sumup-content {
+   background-color: $fourthary-background-color;
+   box-shadow: $box-shadow-secondary-color;
+   height: 110px;
+   border-radius: 0.2em;
+   display: flex;
+   justify-content: baseline;
+   align-items: center;
+   flex-direction: column;
+   & p {
+      margin: 0 auto;
+      padding: 0 auto;;
+   }
+}
+
+.sumup-top {
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   width: 90%;
+}
+
+.car-health-container {
+   background-color: $fourthary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   width:fit-content;
+   padding: 1em;
+   border-radius: 0.2em;
+}
+
+.grid-car-elements {
+   display: flex;
+   width: 95%;
+   height: auto;        
+   margin: 0 auto;
+   justify-content: center;
+}
+
+.car-health-icon {
+   width: 2em;
+   animation: heart-living 1.2s linear infinite;
+}
+
+.card-car {
+   display: flex;
+   width: 400px;
+   justify-content: center;
+   flex-direction: column;
+   margin: 0 auto;
+   border-radius: 0.2em;
+   background-color: $fourthary-background-color;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   & .top-card {
+      display: flex;
+      justify-content: space-between;
+   }
+   & h2 {
+      padding-left: 1em;
+   }
+}
+
+.content-card {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   margin: 0 auto;
+   width: 95%;
+}
+
+.content-half {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: -1em;
+}
+
+// MODAL
+
+/* app/assets/stylesheets/application.scss */
+.modal-overlay {
+   display: none;
+   position: fixed;
+   z-index:2;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.7);
+ }
+ 
+ .modal {
+   position: fixed;
+   color: white;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background: $fourthary-background-color;
+   padding: 20px;
+   border-radius: 0.5em;
+   width: 35vw;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+ }
+ 
+ .modal-content {
+   width:90%;
+   padding: 0.6em 0.8em;
+ }
+ 
+ .close-modal {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   cursor: pointer;
+   font-size: 20px;
+   font-weight: 700;
+   color: #ffffff;
+ }
+ 
+ // CHECKBOX-SLIDER
+
+  .checkbox-wrapper-2 .ikxBAC {
+    appearance: none;
+    background-color: $fifth-background-color;
+    border-radius: 72px;
+    flex-shrink: 0;
+    height: 26px;
+    margin: 0;
+    position: relative;
+    width: 50px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::before {
+    bottom: -6px;
+    content: "";
+    left: -6px;
+    position: absolute;
+    right: -6px;
+    top: -6px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC,
+  .checkbox-wrapper-2 .ikxBAC::after {
+    transition: all 100ms ease-out;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::after {
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    height: 20px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 20px;
+  }
+
+  .checkbox-wrapper-2 input[type=checkbox] {
+    cursor: default;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:hover {
+    background-color: #c9cbcd;
+    transition-duration: 0s;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked {
+    background-color: $validation-color-hover;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked::after {
+    background-color: $white-color;
+    left: 27px;
+  }
+
+  .checkbox-wrapper-2 :focus:not(.focus-visible) {
+    outline: 0;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked:hover {
+    background-color: $validation-color;
+  }
+
+// CHECKBOX CLASSIC
+
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+   .checkbox-wrapper-13 input[type=checkbox] {
+   --active: #275EFE;
+   --active-inner: #fff;
+   --focus: 2px rgba(39, 94, 254, .3);
+   --border: #BBC1E1;
+   --border-hover: #275EFE;
+   --background: #fff;
+   --disabled: #F6F8FF;
+   --disabled-inner: #E1E6F9;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   height: 21px;
+   outline: none;
+   display: inline-block;
+   vertical-align: top;
+   position: relative;
+   margin: 0;
+   cursor: pointer;
+   border: 1px solid var(--bc, var(--border));
+   background: var(--b, var(--background));
+   transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:after {
+   content: "";
+   display: block;
+   left: 0;
+   top: 0;
+   position: absolute;
+   transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:checked {
+   --b: var(--active);
+   --bc: var(--active);
+   --d-o: .3s;
+   --d-t: .6s;
+   --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:disabled {
+   --b: var(--disabled);
+   cursor: not-allowed;
+   opacity: 0.9;
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:disabled:checked {
+   --b: var(--disabled-inner);
+   --bc: var(--border);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:disabled + label {
+   cursor: not-allowed;
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:hover:not(:checked):not(:disabled) {
+   --bc: var(--border-hover);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:focus {
+   box-shadow: 0 0 0 var(--focus);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch) {
+   width: 21px;
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch):after {
+   opacity: var(--o, 0);
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch):checked {
+   --o: 1;
+   }
+   .checkbox-wrapper-13 input[type=checkbox] + label {
+   display: inline-block;
+   vertical-align: middle;
+   cursor: pointer;
+   margin-left: 4px;
+   }
+
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch) {
+   border-radius: 7px;
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch):after {
+   width: 5px;
+   height: 9px;
+   border: 2px solid var(--active-inner);
+   border-top: 0;
+   border-left: 0;
+   left: 7px;
+   top: 4px;
+   transform: rotate(var(--r, 20deg));
+   }
+   .checkbox-wrapper-13 input[type=checkbox]:not(.switch):checked {
+   --r: 43deg;
+   }
+}
+
+.checkbox-wrapper-13 * {
+   box-sizing: inherit;
+}
+.checkbox-wrapper-13 *:before,
+.checkbox-wrapper-13 *:after {
+   box-sizing: inherit;
+}
+
+// ANIMATIONS
+  
+ @keyframes fade-out {
+   0% {
+     opacity: 0;
+     left:0%;
+   }
+   6% {
+      opacity: 1;
+      left: 78%;
+   }
+   90% {
+      opacity: 0.95;
+   }
+   98% {
+      opacity: 0.2;
+   }
+   100% {
+     opacity: 0;
+     left: 78%;
+ }
+}
+
+ 

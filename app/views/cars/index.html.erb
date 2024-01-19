@@ -1,0 +1,73 @@
+<div class="primary-container">
+  <div class="thirdary-button">
+    <%= link_to "Add a car", new_car_path, style: "text-decoration: none; color: black;" %>
+  </div>
+</div>
+
+<div class="global-primary-container" style= "margin-bottom: 10em">
+
+  <h1> Collection (<%= @cars.count %> items) </h1>
+
+  <div class="index-car-grid-container">
+
+    <% @cars.each do |car| %>
+
+        <div class="index-car-card">
+        <%= cl_image_tag(car.photo.key, class: "car-index-image") %>
+
+          <div class="bottom-index-card-content">
+
+            <h3> <%= car.brand %> <%= car.model_specific_name %> </h3> 
+
+            <div class="align-items">
+              <p> Technical inspection : </p>
+                <% if car.technical_control.valid_until >= Date.today %>
+                    <%= image_tag("icon-valid", class: "small-icon")%> 
+                    <% else %>
+                    <%= image_tag("icon-invalid", class: "small-icon") %>
+                <% end %> 
+              </div>
+
+              <div class="align-items">
+                <p> Insurance : </p>
+                <% if car.insurance.assured_until >= Date.today %>
+                    <%= image_tag("icon-valid", class: "small-icon")%> 
+                    <% else %>
+                    <%= image_tag("icon-invalid", class: "small-icon") %>
+                <% end %> 
+              </div>
+
+            <p>Last maintainance : <%= car.maintainance.last_repair_date.year %></p>
+
+            <div class="primary-centered">
+             <%= link_to "Add a trip", '#', class:'thirdary-button', onclick: 'openModal(); return false;' %>
+                <% content_for :modal_content do %>
+                <h2 style="margin-bottom: 2em;">Did you drive your <%= "#{car.model_specific_name}" %> today ? </h2>
+                    <%= form_with(model: Journey.new, url: car_journeys_path(car.id), method: :post) do |f| %>
+                              <div class="form-container">
+                                  <%= f.label :date, "Trip's date " %>
+                                  <%= f.date_field :date, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %>
+                              </div>
+                              <div class="form-container">
+                                <%= f.label :mileage, "How long was the trip ? (km) :" %>
+                                <%= f.number_field :mileage, placeholder: 80, required: true %>
+                                </div>
+                            <div class="primary-centered">
+                                <%= f.submit "Create", style: "text-decoration:none; color:black; margin-top:2em;", class:"thirdary-button"%>
+                            </div>
+                    <% end %>
+            <% end %>
+            </div>
+            
+            <div class="icon-container">
+                <div class="button-container">
+                    <%= link_to image_tag("icon-go-to-white.svg"), car_url(car), class: "small-icon" %>
+                </div>
+            </div>
+
+          </div>
+
+        </div>
+    <% end %>
+  </div>
+</div>

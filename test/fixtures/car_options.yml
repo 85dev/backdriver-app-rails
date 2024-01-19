@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exterior_color: MyString
+  interior_color: MyString
+  motricity: MyString
+  gearbox: MyString
+  vehicle_type: MyString
+  model: MyString
+  door_number: 1
+  modifications: MyString
+  modified: false
+  original: MyString
+  specifications: MyString
+  leather_interior: false
+  specific_material: MyString
+  car: one
+
+two:
+  exterior_color: MyString
+  interior_color: MyString
+  motricity: MyString
+  gearbox: MyString
+  vehicle_type: MyString
+  model: MyString
+  door_number: 1
+  modifications: MyString
+  modified: false
+  original: MyString
+  specifications: MyString
+  leather_interior: false
+  specific_material: MyString
+  car: two

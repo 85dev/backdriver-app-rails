@@ -1,0 +1,56 @@
+<div class="global-secondary-container">
+    <h1> Statistics </h1>
+    <div class="width-container">
+        <div class="grid-statistics-container">
+            <div class="grid-card">
+            <% if @total_cars_worth > 0 %>
+                <div class="grid-card-content">
+                <p> Total current value : <h4 class="statistics"> <%= @total_cars_worth_string %> € </h4></p>
+                <% end %>
+                </div>
+            </div>
+            <div class="grid-card">
+            <% if @cars_number > 0 %>
+                <div class="grid-card-content">
+                <p> Number of cars : <h4 class="statistics"> <%= @cars_number %> </h4></p>
+                </div>
+                <% end %>
+            </div>
+
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p > Average car mileage : <h4 class="statistics"> <%= @average_car_mileage %> km </h4></p>
+                </div>
+            </div>
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p>Average car age:
+                        <h4 class="statistics">
+                            <%= @average_car_age.present? ? "#{@average_car_age} year(s)" : "No data" %>
+                        </h4>
+                    </p>
+                </div>
+            </div>
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p>Total maintenance costs for <%= @yearly_date %>:
+                    <h4 class="statistics">
+                        <%= @last_year_maintenance_costs.present? ? "#{@last_year_maintenance_costs} €" : "No data" %>
+                    </h4>
+                    </p>
+                </div>
+            </div>
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p> Total costs of insurance for <%= @yearly_date %> : 
+                    <h4 class="statistics"> <%= @total_insurance_costs %> € </h4>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container">
+        <h3>Cars by brand</h3>
+            <%= pie_chart @cars.group(:brand).count, donut: true, label: 'Brand' %>
+        </div>
+    </div>
+</div>

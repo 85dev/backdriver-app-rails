@@ -1,0 +1,15 @@
+test:
+  cloud_name: "djsk8cshz"
+  api_key: "293282598713389"
+  api_secret: "8Ep7TdV7Nv7oIyV3QUmHZfsMczY"
+  secure: true
+development:
+  cloud_name: "djsk8cshz"
+  api_key: "293282598713389"
+  api_secret: "8Ep7TdV7Nv7oIyV3QUmHZfsMczY"
+  secure: true
+production:
+  cloud_name: "djsk8cshz"
+  api_key: "293282598713389"
+  api_secret: "8Ep7TdV7Nv7oIyV3QUmHZfsMczY"
+  secure: true

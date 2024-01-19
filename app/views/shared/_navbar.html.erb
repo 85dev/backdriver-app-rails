@@ -1,0 +1,32 @@
+
+  <div id="navbar">
+    <div class="navbar-part">
+      <div class="primary-icon" style="margin-right: 1em"><%= link_to image_tag("logo-typo-white.svg"), cars_path %> </div>
+      <% if current_user.cars %>
+        <div class="navbar-icon" title="Collection"><%= link_to image_tag("icon-cars4.svg"), cars_path %></div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-stats.svg"), statistics_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-actions9.svg"), actions_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-repair2.svg"), repairs_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-warnings-content.svg"), urgent_informations_cars_path %> </div>
+        <% if current_user.car_history %>
+          <div class="navbar-icon"><%= link_to image_tag("icon-money2.svg"), user_car_history_path(current_user, current_user.car_history.id) %></div>
+        <% end %>
+      <% else %>
+        <div class="navbar-icon"><%= link_to image_tag("icon-add-white.svg"), new_car_path %></div>
+      <% end %>
+    </div>
+    <div class="navbar-part">
+    <% if current_user.avatar.key %>
+      <div class="user-image-container">
+        <%= link_to cl_image_tag(current_user.avatar.key, class: "navbar-user-image"), edit_user_registration_path %> 
+      </div>
+    <% else %>
+          <div class="navbar-icon">
+            <%= link_to image_tag("icon-user.svg"), edit_user_registration_path %> 
+          </div>
+    <% end %>
+      <div class="navbar-icon">
+        <%= link_to image_tag("icon-sign_out2.svg"), users_sign_out_path %>
+      </div> 
+    </div>
+  </div>

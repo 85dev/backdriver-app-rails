@@ -1,0 +1,68 @@
+<div class="global-primary-container">
+    <h1> Urgent informations </h1>
+    <h3>Maintainance</h3>
+    <div class="primary-center">
+    <p> Cars which have not been maintained since 3 years at least : </p>
+    <% if @unmaintained_cars %>
+        <table>
+            <thead>
+                <tr>
+                <th>Model</th>
+                <th class="align-items">Last Maintenance Date 
+                    
+                        <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div></th>
+                </tr>
+            </thead>
+                <tbody>
+                    <% @unmaintained_cars.each_with_index do |car, index| %>
+                        <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
+                            <td><%= car.model_specific_name %></td>
+                            <td><%= car.maintainance.last_repair_date %></td>
+                            <td class="icon-cell">
+                            <div class="primary-button">
+                                <%= link_to "Show", car_path(car.id), style: "text-decoration: none; color: black;"%>
+                            </div>
+                            </td>
+                            <td class="icon-cell">
+                            <div class="primary-button">
+                                <%= link_to "Edit", edit_car_path(car.id), style: "text-decoration: none; color: black;" %>
+                            </div>
+                            </td>
+                        </tr>
+                <% end %>
+            </tbody>
+        </table>
+    <% else %>
+        <p><strong>No cars unmaintained since 3 years or longer</strong></p>
+    <% end %>
+    </div>
+  <h3>Technical control</h3>
+  <p> Cars with invalid technical inspections : </p>
+        <table>
+            <thead>
+                <tr>
+                <th>Model</th>
+                <th class="align-items">Invalid since <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div></th>
+                </tr>
+            </thead>
+                <tbody>
+                <% @invalid_cars.each_with_index do |car, index| %>
+                <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
+                    <td><%= car.model_specific_name %></td>
+                    <td><%= car.maintainance.last_repair_date %></td>
+                    <td class="icon-cell">
+                    <div class="primary-button">
+                        <%= link_to "Show", car_path(car.id), style: "text-decoration: none; color: black;"%>
+                    </div>
+                    </td>
+                    <td class="icon-cell">
+                    <div class="primary-button">
+                        <%= link_to "Edit", edit_car_path(car.id), style: "text-decoration: none; color: black;" %>
+                    </div>
+                    </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+  <h3>Insurance</h3>
+</div>
