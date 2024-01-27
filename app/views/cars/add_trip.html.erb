@@ -1,0 +1,21 @@
+<div class="modal">
+    <div class="secondary-container" style="margin-top: -1.6em; margin-bottom: 0.6em;">
+    <div style= "display: flex; justify-content: start; align-items: center; width: 100%; margin-top: 1em; margin-bottom: 1.4em;">
+                <div><%= link_to "Back to car", :back, class: "primary-button"%></div>
+            </div>
+            <%= form_with(model: Journey.new, url: car_journeys_path(car_id: @car.id), method: :post) do |f| %>
+            <div class="primary-centered">
+            <h3> Add a trip to your <%= @car.model_specific_name %></h3>
+                <div class="primary-centered">
+                    <p> When did you last go on a trip ? </p>
+                    <div><%= f.date_field :date, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %></div>
+                </div>
+                <div class="primary-centered">
+                    <p><%= f.label :mileage, "How long was the trip ? (km)" %></p>
+                    <%= f.number_field :mileage, placeholder: 80%>
+                </div>
+                    <%= f.submit "Add a trip", style: "text-decoration:none; color:white; border-radius: .25rem !important; margin-top: 2em;", class: "thirdary-button" %>
+            </div>
+            <% end %>
+    </div>
+</div>

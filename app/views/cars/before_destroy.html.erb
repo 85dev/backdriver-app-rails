@@ -1,0 +1,18 @@
+
+    <div class="modal">
+            <div class="secondary-container">
+            <div style= "display: flex; justify-content: start; align-items: center; width: 100%; margin-top: -2em; margin-bottom: 1.4em;">
+                <div><%= link_to "Back to car", :back, class: "primary-button"%></div>
+            </div>
+                <%= form_with(model: @car, url: car_path(@car), method: :delete) do |f| %>
+                    <div class="primary-centered">
+                        <div class="field">
+                        <p><%= f.label :selling_price, "Did you sell the car ? If yes, please write its selling price :" %></p>
+                        </div>
+                        <div class="field">
+                        <%= f.number_field :selling_price, placeholder: 15000, required: true %>
+                        </div>
+                        <div class="primary-centered"><%= f.submit "Delete from collection", style: "text-decoration:none; border-radius: 0.25rem !important; margin-top: 2em;", class:"thirdary-button"%></div>
+                <% end %>
+    </div>     
+</div>

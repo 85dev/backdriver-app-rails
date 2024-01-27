@@ -2,15 +2,24 @@
   <div id="navbar">
     <div class="navbar-part">
       <div class="primary-icon" style="margin-right: 1em"><%= link_to image_tag("logo-typo-white.svg"), cars_path %> </div>
-      <% if current_user.cars %>
+      <% if current_user.cars.any? %>
         <div class="navbar-icon" title="Collection"><%= link_to image_tag("icon-cars4.svg"), cars_path %></div>
-        <div class="navbar-icon"><%= link_to image_tag("icon-stats.svg"), statistics_cars_path %> </div>
-        <div class="navbar-icon"><%= link_to image_tag("icon-actions9.svg"), actions_cars_path %> </div>
-        <div class="navbar-icon"><%= link_to image_tag("icon-repair2.svg"), repairs_cars_path %> </div>
-        <div class="navbar-icon"><%= link_to image_tag("icon-warnings-content.svg"), urgent_informations_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-statistics!.svg"), statistics_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-actions!.svg"), actions_cars_path %> </div>
+        <div class="navbar-icon"><%= link_to image_tag("icon-repair!.svg"), repairs_cars_path %> </div>
         <% if current_user.car_history %>
-          <div class="navbar-icon"><%= link_to image_tag("icon-money2.svg"), user_car_history_path(current_user, current_user.car_history.id) %></div>
+          <div class="navbar-icon"><%= link_to image_tag("icon-archives!!.svg"), user_car_history_path(current_user, current_user.car_history.id) %></div>
         <% end %>
+          <div class="navbar-icon-notification">
+            <%= link_to image_tag("icon-warnings-content.svg"), urgent_informations_cars_path %> 
+              <% if @user_notification %>
+                <div class="notification-chip">
+                  <%=link_to(urgent_informations_cars_path, style: "text-decoration: none") do %>
+                    <%= @user_notification %> <!-- Replace with the actual count of notifications -->
+                  <% end %>
+                </div>
+              <% end %>
+          </div>
       <% else %>
         <div class="navbar-icon"><%= link_to image_tag("icon-add-white.svg"), new_car_path %></div>
       <% end %>

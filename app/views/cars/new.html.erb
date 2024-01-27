@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-container">
-            <p><%= form.label :purchase_price, "Purchase price (Euro) : " %></p>
+            <p><%= form.label :purchase_price, "Purchase price (€) : " %></p>
             <%= form.number_field :purchase_price, placeholder: 15000, required: true %>
         </div>
 
@@ -184,11 +184,7 @@
            <div id="form-multiple-select">
                 <% Car::INTERIOR_OPTIONS.each do |option| %>
                     <div class="checkbox-wrapper-13">
-                    <input id="<%= "car_option_form_interior_material_#{option}" %>"
-                            type="checkbox"
-                            name="car_option_form[interior_material][]"
-                            value="<%= option %>"
-                    >
+                    <%= car_option_form.check_box :interior_material, { multiple: true }, option, nil %>
                     <label for="<%= "car_option_form_interior_material_#{option}" %>"><%= option %></label>
                     </div>
                 <% end %>
@@ -200,11 +196,7 @@
             <div id="form-multiple-select">
             <% Car::EXTERIOR_OPTIONS.each do |option| %>
                 <div class="checkbox-wrapper-13">
-                <input id="<%= "car_option_form_exterior_material_#{option}" %>"
-                        type="checkbox"
-                        name="car_option_form[exterior_material][]"
-                        value="<%= option %>"
-                >
+                <%= car_option_form.check_box :exterior_material, { multiple: true }, option, nil %>
                 <label for="<%= "car_option_form_exterior_material_#{option}" %>"><%= option %></label>
                 </div>
             <% end %>
@@ -213,11 +205,6 @@
              <div class="form-container">
                 <p><%= car_option_form.label :door_number %></p>
                 <%= car_option_form.number_field :door_number, in: 0..7, placeholder: 5, required: true %>
-            </div>
-
-            <div class="form-container">
-                <p><%= car_option_form.label :modifications, "Modifications from original :" %></p>
-                <%= car_option_form.text_field :modifications,  required: true, default: "None" %>
             </div>
         </div>
          <%end%>
@@ -313,7 +300,7 @@
 
             <% end %>
         </div>
-        <%= form.submit 'Create', class:"thirdary-button", role:"button", style: "text-decoration:none; color:black;" %>
+            <%= form.submit 'Create', class:"thirdary-button", role:"button", style: "text-decoration:none; color:white;" %>
         <% end %>
     </div>
   </div>

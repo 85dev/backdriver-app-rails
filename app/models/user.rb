@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  has_many :cars
-  has_one :car_history
+  has_many :cars, dependent: :destroy
+  has_one :car_history, dependent: :destroy 
+  has_many :notifications, dependent: :destroy
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_19_085249) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_27_174846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,8 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_19_085249) do
     t.string "vehicle_type"
     t.string "model"
     t.integer "door_number"
-    t.string "modifications"
-    t.string "original"
     t.string "specifications"
     t.bigint "car_id", null: false
     t.datetime "created_at", null: false
@@ -140,6 +138,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_19_085249) do
     t.index ["car_id"], name: "index_maintainances_on_car_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "message"
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "repairs", force: :cascade do |t|
     t.bigint "car_id", null: false
     t.integer "repair_cost"
@@ -190,6 +197,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_19_085249) do
   add_foreign_key "insurances", "cars"
   add_foreign_key "journeys", "cars"
   add_foreign_key "maintainances", "cars"
+  add_foreign_key "notifications", "users"
   add_foreign_key "repairs", "cars"
   add_foreign_key "technical_controls", "cars"
 end

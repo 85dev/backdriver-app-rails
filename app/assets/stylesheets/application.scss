@@ -19,13 +19,20 @@
 $primary-background-color: #181818;
 $secondary-background-color: #272727;
 $tertiary-background-color: #2f2c32;
-$fourthary-background-color: #3e3e3e;
+$fourthary-background-color: #343434;
 $fifth-background-color: #646464;
 
 $warning-color: red;
+$vigilance-color: rgb(255, 132, 0);
 $linking-color: rgb(144, 119, 255);
+$linking-color2: rgb(85, 71, 148);
+
 $white-color: white;
 $black-color: black;
+
+$navbar-navy-color: rgb(61, 53, 77);
+$navbar-navy-color2: rgb(76, 50, 130);
+$navbar-navy-color3: rgb(95, 65, 156);
 
 $validation-color: rgb(31, 134, 29);
 $validation-color-hover: rgb(48, 153, 46);
@@ -38,10 +45,12 @@ $box-shadow-secondary-color: rgba(109, 109, 109, 0.25);
 
  body {
    margin: 0 auto;
+   background-color: $primary-background-color;
    box-sizing: border-box;
-   background: $primary-background-color;
+   font-size: 0.9em;
    color: white;
    font-family: 'Nunito', sans-serif;
+   overflow-x: hidden;
  }
 
 /* NAVIGATION BAR */
@@ -58,11 +67,27 @@ $box-shadow-secondary-color: rgba(109, 109, 109, 0.25);
    padding-top: 0.2em;
    flex-direction: row;
    justify-content: space-between;
-   background-color: $secondary-background-color;
+   background: linear-gradient(300deg,$navbar-navy-color,$linking-color2,$fourthary-background-color);
+   background-size: 120% 180%;
+   animation: gradient-animation 3s ease infinite;
    color: white;
-   box-shadow: $box-shadow-secondary-color 0px 7px 29px 7px;
+   box-shadow: $box-shadow-secondary-color 0px 4px 28px 4px;
    max-height: 68px; 
 }
+
+// NAVBAR ANIMATION 
+
+@keyframes gradient-animation {
+   0% {
+     background-position: 5% 50%;
+   }
+   50% {
+     background-position: 90% 50%;
+   }
+   100% {
+     background-position: 5% 50%;
+   }
+ }
 
 .navbar-part {
    margin: 1.2em 0.6em;
@@ -107,14 +132,13 @@ hr {
    border-radius: 0.2em;
    padding: 0.4em 0.8em;
    overflow: hidden;
-   top: -7%;
-   left: 82%;
-   color: rgb(255, 0, 0);
+   color: $warning-color;
    animation: fade-out 4s linear forwards;
    animation-iteration-count: 1;
 }
 
 .notice {
+   width: 12vw;
    margin: 6em 0em;
    position: fixed;
    font-weight: 500;
@@ -122,12 +146,14 @@ hr {
    border-radius: 0.2em;
    padding: 0.4em 0.8em;
    overflow: hidden;
-   top: -7%;
-   left: 82%;
-   color: white;
+   color: $white-color;
    animation: fade-out 4s linear forwards;
    animation-iteration-count: 1;
 }
+
+.hidden {
+   display: none;
+ }
 
 /* IMAGES / ICON / CHIP */
 
@@ -222,14 +248,6 @@ hr {
    justify-content: flex-end;
 }
 
-.notification-chip {
-   position: absolute;
-   top: 0;
-   left: 10px;
-   background-color: red;
-   border-radius: 1em;;
-}
-
 /* CONTAINER, CARDS, INPUT, FORM */
 
 .primary-centered {
@@ -249,6 +267,40 @@ hr {
    }
 }
 
+.input-container {
+
+   position: relative;
+   & #search-model-input {
+      padding-left: 2.5em;
+      padding-right: 3.5em;;
+      padding-top: 0.8em;
+      padding-bottom: 0.8em;
+   }
+}
+
+.clear-icon,
+.search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0 0.4em; 
+  & :hover {
+   padding-top: 0.2em;
+   transition: 0.2s;
+  }
+}
+
+.clear-icon {
+   right: 0.2em;
+   color:red;
+ }
+ 
+ .search-icon {
+   left: 0.2em; /* Adjust the right distance as needed */
+ }
+
 .form-container {
    display: flex;
    justify-content: space-between;
@@ -263,8 +315,37 @@ hr {
    }
    & input {
       font-size: 1em;
-      font-family: "Nunito";
+      border-radius: 5em;
+      border-style: none;
+      padding: 0.4em 0.8em;
+      box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+      font-family: "Nunito", sans-serif;
    }
+}
+
+.cargo-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.top-content-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 95%;
+   margin: 1em 1em;
+   & input {
+      border-radius: 5em;
+      border-style: none;
+      font-size: 0.9em;
+      width: 20vw;
+      padding: 0.6em 1.2em;
+      box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+      font-family: "Nunito", sans-serif;
+   }
+   
 }
 
 #form-multiple-select {
@@ -281,18 +362,27 @@ hr {
 }
 
 .global-primary-container {
-   margin: 2em 1.4em;
-   padding: 1em 0.8em;
-   background-color: $secondary-background-color;
+   margin: 2em 2.2em;
+   padding: 1em 1.2em;
+   background-color: rgba($secondary-background-color, 1);
    color: white;
-   border-radius: 1em;
-   box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+   border-radius: 0.2em;
+   box-shadow: $box-shadow-primary-color 0px 3px 28px 3px;
    & h3 {
       margin-left: 1em;
-      margin-top: em;
+      margin-top: 1em;
+      font-size: 1.1em;
+   }
+   & h2 {
+      text-align: center;
+      font-size: 1.2em;
    }
    & p {
       margin-left: 1em;
+      font-size: 1.05em;
+   }
+   & h1 {
+      font-size: 1.34em;
    }
 }
 
@@ -306,11 +396,21 @@ hr {
    color: white;
    border-radius: 1em;
    box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
-   & h1 {
-   padding: 0.6em 0em;
+   & h3 {
+      margin-left: 1em;
+      margin-top: 1em;
+      font-size: 1.1em;
    }
-   & .primary-container {
-      margin-top: 0;
+   & h2 {
+      text-align: center;
+      font-size: 1.2em;
+   }
+   & p {
+      margin-left: 1em;
+      font-size: 1.05em;
+   }
+   & h1 {
+      font-size: 1.34em;
    }
 }
 
@@ -318,11 +418,54 @@ hr {
    display: grid;
    grid-template-columns: repeat(auto-fill, 300px);
    grid-gap: 30px;
+   justify-content: center;
    max-width: 1400px;
    width: 95%;
    height: auto;
    margin: 0.6em 0.4em;
 }
+
+.flex-start {
+   display: flex; justify-content: start; align-items:center; padding-left: 2em; margin-top: 1em;
+   & h3 {
+      margin-left: 0em;
+   }
+}
+
+.flex-start-warning {
+   display: flex; 
+   justify-content: baseline; 
+   align-items:center; 
+   margin: 1.5em 0em;
+   margin-top: 1em;
+   background-color: $vigilance-color;
+   color: $black-color;
+   & h3 {
+      margin-left: 0em;
+   }
+   & .secondary-icon {
+      margin-right: -0.4em;
+      margin-left:1em;
+   }
+   & p {
+      font-weight: 500;
+   }
+}
+
+.table-grid {
+   margin-top: 3em;
+   display: grid;
+   grid-template-columns: repeat(auto-fill, 30vw);
+   gap: 20px;
+   justify-content: center;
+ }
+
+ .table-container {
+   width: 100%;
+   background-color: $fourthary-background-color;
+   border-radius: 1em;
+   box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+ }
 
  .primary-container {
     margin: 3em 0em;
@@ -330,6 +473,17 @@ hr {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+ }
+
+ .primary-container-button {
+   margin: 3em 0em;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   & .thirdary-button {
+      line-height: 2em;
+   }
  }
 
  .cancel-container {
@@ -347,6 +501,14 @@ hr {
    justify-content: center;
    align-items: center;
    flex-direction: column;
+   & input {
+      font-size: 1em;
+      border-radius: 5em;
+      border-style: none;
+      padding: 0.4em 0.8em;
+      box-shadow: $box-shadow-primary-color 0px 7px 29px 0px;
+      font-family: "Nunito", sans-serif;
+   }
 }
 
 .width-container {
@@ -427,6 +589,12 @@ hr {
       padding-right: 0.8em;
       margin-bottom: -1em;
    }
+   & h3 {
+      font-size: 1.05em;
+   }
+   & p {
+      font-size: 1em;
+   }
 }
 
 .bottom-index-card-content {
@@ -486,11 +654,11 @@ table {
  }
 
 .row-odd {
-   background-color: $primary-background-color;
+   background-color: $secondary-background-color;
  }
  
  .row-even {
-   background-color: $secondary-background-color;
+   background-color: $fourthary-background-color;
  }
 
 .icon-cell:last-child,
@@ -543,13 +711,15 @@ table {
  }
 
  .secondary-button {
-   background-color: $secondary-hover-color;
+   align-items: center;
+   background-clip: padding-box;
+   background-color: $warning-color;
    border: none;
    text-decoration: none;
    text-align: center;
    border-radius: 10px;
    padding: 0.4em 1em;
-   color: black;
+   color: white;
    border: none;
    font-weight: 500;
    font-size: small;
@@ -560,17 +730,38 @@ table {
       margin-left: 0.1em;
       transition: 0.3s;
    }
+   border: 1px solid transparent;
+   border-radius: 0.2em;
+   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
+   box-sizing: border-box;
+   color: $white-color;
+   cursor: pointer;
+   display: inline-flex;
+   font-family: "Nunito", sans-serif;
+   justify-content: center;
+   line-height: 1.25;
+   margin: 0;
+   min-height: 3rem;
+   padding: calc(.5rem - 1px) calc(1.2rem - 1px);
+   position: relative;
+   text-decoration: none;
+   transition: all 250ms;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   vertical-align: baseline;
+   width: auto;
 }
 
 .thirdary-button {
   align-items: center;
-  background-clip: padding-box;
-  background-color: $white-color;
+  background: linear-gradient(300deg,$navbar-navy-color,$linking-color2,$fourthary-background-color);  
+  background-size: 200% 300%;
+  animation: gradient-animation 2s ease infinite;
   border: 1px solid transparent;
-  border-radius: .25rem;
   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
   box-sizing: border-box;
-  color: $black-color;
+  color: $white-color;
   cursor: pointer;
   display: inline-flex;
   font-size: 1em;
@@ -647,73 +838,18 @@ table {
       transition: 0.2s;
    }
 }
-
-// DROPDOWN BUTTON
-
-.dropdown-container {
-   position: relative;
-   display: inline-block;
- }
- 
- .dropdown-toggle {
-   cursor: pointer;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   & p {
-      padding-right: 0.5em;
-   }
- }
- 
- .arrow {
-   font-size: 18px;
-   margin-right: 5px;
-   transition: transform 0.1s ease-in-out;
-   & .arrow-icon {
-      width: 0.6em;
-   }
- }
- 
- .dropdown-menu {
-   display: none;
-   position: absolute;
-   z-index:1;
-   top: 100%;
-   left: 0;
-   background-color: $secondary-background-color;
-   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
- }
- 
- .dropdown-menu ul {
-   list-style: none;
-   padding: 0;
-   margin: 0;
- }
- 
- .dropdown-menu li {
-   display: flex;
-   align-items: center;
-   padding: 0em 0.6em;
-   width: fit-content;
-   cursor: pointer;
- }
- 
- .dropdown-container.active .arrow {
-   transform: rotate(180deg);
- }
- 
- .dropdown-container.active .dropdown-menu {
-   display: block;
- }
  
 // CAR GRID 
 
 .title-with-image {
    display: flex;
    flex-direction: row;
-   justify-content: space-between;
+   justify-content: flex-start;
    align-items: center;
    margin: 0em 2.5em;
+   & h1 {
+      font-size: 1.1em;
+   }
 }
 
 .sumup-car-infos {
@@ -732,7 +868,7 @@ table {
 .sumup-content {
    background-color: $fourthary-background-color;
    box-shadow: $box-shadow-secondary-color;
-   height: 110px;
+   height: 100px;
    border-radius: 0.2em;
    display: flex;
    justify-content: baseline;
@@ -751,34 +887,71 @@ table {
    width: 90%;
 }
 
-.car-health-container {
+.primary-car-health-container {
    background-color: $fourthary-background-color;
-   box-shadow: $box-shadow-secondary-color 0px 7px 29px 0px;
    display: flex;
    justify-content: center;
    flex-direction: column;
-   align-items: center;
-   width:fit-content;
-   padding: 1em;
    border-radius: 0.2em;
+   margin-bottom: 2em;
+   width:80%;
+   height:30vh;
+}
+
+.car-sumup-top {
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   padding: 0em 2em;
+}
+
+.car-half {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+}
+
+.car-health-left {
+   width: 50%;
+   display: flex;
+   flex-direction: column;
+   & .align-content {
+      display: flex;
+      align-items: center;
+      padding-left: 2em;
+      font-size: 1.1em;
+      font-weight: 300;
+      padding-top: 2em;
+      & .small-icon {
+         padding-right: 1em;
+      }
+   }
+}
+
+.car-image {
+   border-top-right-radius: 0.2em;
+   border-bottom-right-radius: 0.2em;
+   height: 30vh;
+   object-fit: cover; 
+   margin: 0 auto;
+   padding: 0 auto;
 }
 
 .grid-car-elements {
    display: flex;
-   width: 95%;
+   width: 100%;
    height: auto;        
    margin: 0 auto;
    justify-content: center;
+   margin-bottom: 2em;
 }
 
 .car-health-icon {
    width: 2em;
-   animation: heart-living 1.2s linear infinite;
 }
 
 .card-car {
-   display: flex;
-   width: 400px;
+   width: 300px;
    justify-content: center;
    flex-direction: column;
    margin: 0 auto;
@@ -800,6 +973,9 @@ table {
    justify-content: space-between;
    margin: 0 auto;
    width: 95%;
+   & h4 {
+      padding-right: 0.6em;
+   }
 }
 
 .content-half {
@@ -812,7 +988,6 @@ table {
 
 // MODAL
 
-/* app/assets/stylesheets/application.scss */
 .modal-overlay {
    display: none;
    position: fixed;
@@ -823,7 +998,7 @@ table {
    height: 100%;
    background: rgba(0, 0, 0, 0.7);
  }
- 
+
  .modal {
    position: fixed;
    color: white;
@@ -1016,6 +1191,48 @@ table {
    box-sizing: inherit;
 }
 
+// MINI GRID
+
+.mini-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 4px; 
+   width: 100%;
+ }
+
+ .mini-grid-elements {
+   border: 1px solid $navbar-navy-color3;
+   padding: 10px;
+   border-radius: 5px;
+   text-align: center;
+ }
+ 
+ // NOTIFICATIONS
+
+ .navbar-icon-notification {
+   position: relative;
+   display: inline-block;
+   width: 1.5em;
+   margin: 0.6em;
+   cursor: pointer;
+ }
+
+ .notification-chip {
+   position: absolute;
+   width: 75%;
+   border-radius: 50%;
+   text-align: center;
+   top: -30%;
+   right: -22%;
+   background-color: $white-color;
+   color: $warning-color;
+   font-size: 12px;
+   &:hover {
+      transform: scale(1.2);
+      transition: 0.2s;
+   }
+ }
+ 
 // ANIMATIONS
   
  @keyframes fade-out {
@@ -1025,7 +1242,7 @@ table {
    }
    6% {
       opacity: 1;
-      left: 78%;
+      left: 80%;
    }
    90% {
       opacity: 0.95;
@@ -1035,7 +1252,7 @@ table {
    }
    100% {
      opacity: 0;
-     left: 78%;
+     left: 80%;
  }
 }
 

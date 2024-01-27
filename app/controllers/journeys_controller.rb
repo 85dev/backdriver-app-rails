@@ -17,7 +17,7 @@ class JourneysController < ApplicationController
 
     if @journey.save
       @car.update(mileage: @car.mileage + @journey.mileage)
-      redirect_to cars_path, notice: 'Journey was successfully added to your car.'
+      redirect_to cars_path, notice: "Trip n°#{@journey.id} was successfully added to your car."
     else
       render :new
     end

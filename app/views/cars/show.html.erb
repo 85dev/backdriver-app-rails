@@ -1,24 +1,26 @@
-<div class="secondary-container">
-    <%= link_to "Did you sell this #{@car.model_specific_name}", '#', class:'thirdary-button', onclick: 'openModal(); return false;' %>
-        <% content_for :modal_content do %>
-        <h2>Delete this car from your collection ?</h2>
-            <%= form_with(model: @car, url: car_path(@car), method: :delete) do |f| %>
-                <div class="primary-centered">
-                    <div class="field">
-                        <%= f.label :selling_price, "Did-you sell the car ? If yes, please write the price :" %>
-                    </div>
-                    <div class="field">
-                      <%= f.number_field :selling_price, placeholder: 15000, required: true %>
-                    </div>
-                        <%= f.submit "Delete", style: "text-decoration:none; color:black;", class: "thirdary-button" %>
-                    </div>
-            <% end %>
-    <% end %>
+<div class="cargo-container">
+    <div class="top-content-container" style="margin-bottom: -0.8em;">   
+            <div class="thirdary-button">
+             <%= link_to "Did you drive it recently ?", 
+                        add_trip_cars_path(@car),
+                        style: "text-decoration:none; color:white;",
+                        data: { turbo_frame: 'modal' }
+                        %>
+            </div>
+            <div class="thirdary-button">
+            <%= link_to "Did you sell this #{@car.model_specific_name} ?", 
+                        before_destroy_cars_path(@car),
+                        style: "text-decoration:none; color:white;",
+                        data: { turbo_frame: 'modal' }
+                        %>
+            </div>
+    </div>
 </div>
-<div class="global-primary-container">
+
+<div class="global-primary-container" style="margin-bottom: 8em;">
     <div class="title-with-image">
+        <%= image_tag("icon-drivable.svg", class:"primary-illustration") %>
         <h1>Model : <%= @car.brand + " " + @car.model_specific_name %></h1>
-        <%= image_tag("icon-administrative", class:"primary-illustration") %>
     </div>
 
     <div class="sumup-car-infos">
@@ -32,11 +34,19 @@
         </div>
 
         <div class="sumup-content">
-             <div class="sumup-top">
+            <div class="sumup-top">
                 <%= image_tag("icon-technical-rund", class:"car-show-icon") %>
                 <h3>Technical inspection</h3>
             </div>
             <p>Date of validity : <%= @car.technical_control.valid_until %></p>
+        </div>
+
+         <div class="sumup-content">
+            <div class="sumup-top">
+                    <%= image_tag("icon-engine", class:"car-show-icon") %>
+                    <h3>Maintainance</h3>
+            </div>
+            <p>Last maintainance : <%= @car.maintainance.last_repair_date %></p>
         </div>
 
         <div class="sumup-content">
@@ -50,99 +60,204 @@
                 <%= image_tag("icon-invalid", class:"car-show-icon") %>
             <% end %>
         </div>
-
-          <div class="sumup-content">
-            <div class="sumup-top">
-                    <%= image_tag("icon-engine", class:"car-show-icon") %>
-                    <h3>Maintainance</h3>
-            </div>
-            <p>Last maintainance : <%= @car.maintainance.last_repair_date %></p>
-        </div>
     </div>
 
-    <div class="primary-container">
+    <div class="title-with-image">
+         <%= image_tag('icon-health', class:'car-health-icon')%>
+        <h3> Global health's score : <%= @health_score %> %</h3>
+    </div>
+
+<div class="cargo-container">
+    <div class="primary-car-health-container">
         <div class="car-health-container">
-            <div class="sumup-top">
-                <%= image_tag('icon-health', class:'car-health-icon')%>
-                <h3> Global health's score : 58%</h3>
-            </div>
-            <%= image_tag('icon-warnings-content', class:"car-show-icon") %>
-            <div class="car-health-bottom">
-            <ul>
-                <li><%= @valid_technical_control ? "Car has a valid technical inspection" : "Car needs a technical inspection" %></li>
-                <li><%= @valid_insurance ? "Car is insured" : "Car is not insured" %></li>
-                <li>Last maintainance : <%= (Date.today.year - @car.maintainance.last_repair_date.year) %> year(s) ago </li>
-            </ul>
+            <div class="car-half">
+                <div class="car-health-left">
+                    <div class="align-content">
+                        <%= image_tag('icon-repair.svg', class:'small-icon')%> 
+                        <%= @valid_technical_control ? "Car has a valid technical inspection" : "Car needs a technical inspection" %>
+                    </div>
+                    <div class="align-content">
+                        <%= image_tag('icon-administrative.svg', class:'small-icon')%> 
+                        <%= @valid_insurance ? "Car is insured" : "Car is not insured" %>
+                    </div>
+                    <div class="align-content">
+                        <%= image_tag('icon-engine.svg', class:'small-icon')%> 
+                        Last maintainance : 
+                        <%= (Date.today.year - @car.maintainance.last_repair_date.year) %> year(s) ago 
+                    </div>
+                    <div class="align-content">
+                        <%= image_tag('icon-battery.svg', class:'small-icon')%> 
+                        Battery state () Battery age ()
+                    </div>
+                </div>
+                <div class="car-health-right">
+                    <div><%= cl_image_tag(@car.photo.key, class:"car-image") %></div>
+                </div>
             </div>
         </div>
+    </div>
+</div>
+
+    <div class="title-with-image">
+         <%= image_tag('icon-info', class:'car-health-icon')%>
+        <h3>Global car informations</h3>
     </div>
 
     <div class="grid-car-elements">
         <div class="card-car">
             <div class="top-card">
                 <h2> Car informations </h2>
-                <%= image_tag("icon-info.svg", class:"primary-illustration") %>
+                <%= image_tag("icon-engine.svg", class:"primary-illustration") %>
             </div>
 
             <div class="content-card">
                 <div class="content-half">
-                    <p>Model Year</p>
+                    <p>Model year :</p>
                     <h4><%= @car.model_year %></h4>
                 </div>
                 <div class="content-half">
-                    <p>Last time driven</p>
+                    <p>Last time driven :</p>
                     <h4><%= @car.last_time_driven %></h4>
                 </div>
                 <div class="content-half">
-                    <p>Brand</p>
+                    <p>Brand :</p>
                     <h4><%= @car.brand %></h4>
                 </div>
                 <div class="content-half">
-                    <p>Release date : </p>
-                    <h4><%= @car.release_date %></h4>
+                    <p>Fiscal power : </p>
+                    <h4><%= @car.fiscal_power %></h4>
                 </div>
                 <div class="content-half">
-                    <td>Fiscal power</td>
-                    <td><%= @car.fiscal_power %></td>
+                <p>To sell : </p>
+                    <h4><% if @car.to_sell %>
+                        <%= image_tag("icon-valid", style: "width: 1.6em;") %>
+                    <% else %>
+                        <%= image_tag("icon-invalid", style: "width: 1.6em;") %>
+                    <% end %></h4>
                 </div>
                 <div class="content-half">
-                <td>To sell</td>
-                    <td><%= @car.to_sell %></td>
-                </div>
-                <div class="content-half">
-                <p>Mileage</p>
+                <p>Mileage :</p>
                     <h4><%= @car.mileage %></h4>
                 </div>
                 <div class="content-half">
-                        <p>Horse power</p>
+                        <p>Horse power :</p>
                     <h4><%= @car.horse_power %></h4>
                 </div>
                 <div class="content-half">
-                <p>Purchase price</p>
+                    <p>Purchase price :</p>
                     <h4><%= @car.purchase_price %></h4>
                 </div>
                 <div class="content-half">
-                    <p>Release Date</p>
-                    <h4><%= @car.release_date %></h4>
-                </div>
-                </div>
-                <div class="content-half">
-                    <p>Acquisition date</>
+                    <p>Acquisition date :</>
                     <h4><%= @car.acquisition_date %></h4>
                 </div>
-                <div class="content-half">
-                <p> Purchase price : <%= @car.purchase_price %> (Euro)</p>
-                </div>
-
+            </div>
         </div>
 
             <div class="card-car">
+             <div class="top-card">
                 <h2> Insurance </h2>
+                <%= image_tag("icon-administrative.svg", class:"primary-illustration") %>
             </div>
+            <div class="content-card">
+                 <div class="content-half">
+                    <p>Validity :</p>
+                    <h4><%= @car.insurance.assured_until %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Company :</p>
+                    <h4><%= @car.insurance.assurance_company %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Price :</p>
+                    <h4><%= @car.insurance.assurance_price %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Type of insurance : </p>
+                    <h4><%= @car.insurance.assurance_type %></h4>
+                </div>
+                <div class="content-half">
+                <p>Car is insured : </p>
+                    <h4><% if @car.insurance.assured_until >= Date.today %>
+                        <%= image_tag("icon-valid", style: "width: 1.6em;") %>
+                    <% else %>
+                        <%= image_tag("icon-invalid", style: "width: 1.6em;") %>
+                    <% end %></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-car">
+             <div class="top-card">
+                <h2> Technical inspection </h2>
+                <%= image_tag("icon-repair.svg", class:"primary-illustration") %>
+            </div>
+            <div class="content-card">
+                 <div class="content-half">
+                    <p>Frequency :</p>
+                    <h4><%= @car.technical_control.technical_control_frequency %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Company :</p>
+                    <h4><%= @car.technical_control.control_company %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Price :</p>
+                    <h4><%= @car.technical_control.technical_control_price.to_i %></h4>
+                </div>
+                <div class="content-half">
+                <p>Car has valid inspection : </p>
+                    <h4><% if @car.technical_control.valid_until >= Date.today %>
+                        <%= image_tag("icon-valid", style: "width: 1.6em;") %>
+                    <% else %>
+                        <%= image_tag("icon-invalid", style: "width: 1.6em;") %>
+                    <% end %></h4>
+                </div>
+            </div>
+        </div>
 
             <div class="card-car">
+             <div class="top-card">
                 <h2> Model informations </h2>
+                <%= image_tag("icon-engine.svg", class:"primary-illustration") %>
             </div>
+            <div class="content-card">
+                 <div class="content-half">
+                    <p>Exterior color :</p>
+                    <h4><%= @car.car_option.exterior_color %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Interior color :</p>
+                    <h4><%= @car.car_option.interior_color %></h4>
+                </div>
+                <div class="content-half">
+                    <p>Motricity :</p>
+                    <h4><%= @car.car_option.motricity %></h4>
+                </div>
+
+                <p>Interior material(s) : </p>
+                <div class="primary-centered" style="width: 100%;">
+                    <div class="mini-grid">
+                    <% @interior_materials.each do |i_material| %>
+                        <div class="mini-grid-elements">
+                        <%= i_material %>
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+
+                <p>Exterior material(s) : </p>
+                <div class="primary-centered" style="width: 100%;">
+                    <div class="mini-grid">
+                    <% @exterior_materials.each do |x_material| %>
+                        <div class="mini-grid-elements">
+                        <%= x_material %>
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>

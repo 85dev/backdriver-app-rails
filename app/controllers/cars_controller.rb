@@ -2,7 +2,7 @@ require 'date'
 require 'cloudinary'
 
 class CarsController < ApplicationController
-  before_action :set_car, only: [:update, :destroy, :edit, :show]
+  before_action :set_car, only: [:update, :destroy, :edit, :delete, :show]
   before_action :set_cars, only: [:index, :statistics, :urgent_informations, :repairs, :actions]
 
   def new
@@ -37,7 +37,7 @@ class CarsController < ApplicationController
   def edit
   end
 
-  def destroy
+  def destroy    
     selling_price = params[:car][:selling_price]
 
     car_history = current_user.car_history
@@ -54,21 +54,32 @@ class CarsController < ApplicationController
         cars_sold: (car_history.cars_sold || 0) + 1
       )
     end
-  
+
     @car.destroy
     redirect_to cars_url, notice: 'Car was successfully deleted, find the history of your cars in the dedicated window'
   end
-  
-  def index
-    @car_history = current_user.car_history
+
+  def add_trip 
+    @car = Car.find(params[:format])
   end
 
-  def repairs 
+  def before_destroy
+    @car = Car.find(params[:format]) 
+  end
+  
+  def index
+    if params[:query].present?
+      @cars = search_by_model(params)
+      @reset_button = true
+    else
+      @cars = Car.all
+    end
   end
 
   def urgent_informations
     @unmaintained_cars = fetch_unmaintained_cars(@cars)
     @invalid_cars = fetch_invalid_cars(@cars)
+    @uninsured_cars = fetch_uninsured_cars(@cars)
   end
 
   def show
@@ -78,6 +89,9 @@ class CarsController < ApplicationController
     @repairs = @car.repairs if @car.repairs
     @valid_technical_control = @car.technical_control.valid_until > Date.today
     @valid_insurance = @car.insurance.assured_until > Date.today
+    @interior_materials = JSON.parse(@car.car_option.interior_material)
+    @exterior_materials = JSON.parse(@car.car_option.exterior_material)
+    @health_score = 80
     # HEALTH SCORE FUNCTION
   end
 
@@ -99,81 +113,78 @@ class CarsController < ApplicationController
 
   private
 
+  def search_by_model(params)
+    query = params[:query]
+    cars = Car.all
+
+    model_names_with_ids = cars.pluck(:model_specific_name, :id).to_h
+    brands_with_ids = cars.pluck(:brand, :id).to_h
+
+    query.downcase!
+    model_names_with_ids.transform_keys!(&:downcase)
+    brands_with_ids.transform_keys!(&:downcase)
+  
+    model_results = model_names_with_ids.select { |model_name, _id| model_name.include?(query) }
+    matched_ids = model_results.values
+
+    brand_results = brands_with_ids.select { |brand, _id| brand.include?(query) }
+    matched_ids << brand_results.values
+  
+    matched_cars = Car.where(id: matched_ids)
+    matched_cars.empty? ? nil : matched_cars
+  end
+  
+
   def fetch_invalid_cars(cars)
-    if cars
-      invalid_cars = []
+    return unless cars
 
-      cars.each do |car|
-        if car.technical_control.valid_until <= Date.today
-          invalid_cars << car
-        end
+      cars.select do |car|
+        car.technical_control.valid_until <= Date.today
       end
-
-      return invalid_cars
-    end
   end
 
   def fetch_unmaintained_cars(cars)
-    if cars
-      unmaintained_cars_array = []
+    return unless cars
   
-      cars.each do |car|
-        if car.maintainance.last_repair_date.year <= Date.today.year - 3
-          unmaintained_cars_array << car
-        end
-      end
+    cars.select do |car|
+      car.maintainance.last_repair_date.year <= Date.today.year - 3
+    end
+  end
 
-      return unmaintained_cars_array
+  def fetch_uninsured_cars(cars)
+    return unless cars
+
+    cars.select do |car|
+      car.insurance.assured_until < Date.current
     end
   end
 
   def calculate_total_insurance_cost(cars)
-    if cars
-      total_costs = 0
-
-      cars.each do |car|
-        total_costs += car.insurance.assurance_price
-      end
-
-      return separate_number_with_dots(total_costs)
-    end
+    return unless cars
+  
+    total_costs = cars.sum { |car| car.insurance.assurance_price }
+  
+    separate_number_with_dots(total_costs)
   end
 
   def average_car_mileage(cars)
-    if cars 
-      total_mileage = 0
-      cars_number = 0
-      average_car_milage = 0
-
-      total_mileage = cars.sum(&:mileage)
-
-      average_car_milage = total_mileage / cars_number.count if (total_mileage > 0 && cars_number > 0)
-
-      return separate_number_with_dots(average_car_milage)
-    end
-  end
-
-  def average_car_age(cars)
-    if cars
-      total_cars_age = 0
-      current_year = Date.today.year
-      
-      cars.each do |car|
-        if car.release_date.present?
-          total_cars_age += current_year - car.release_date.year.to_f
-        else
-          return total_cars_age = "No data"
-        end
-
-      end
-    
-      counter = cars.count
-      average_age = (counter > 0) ? (total_cars_age / counter) : 0
-    
-      average_age.nan? ? 0 : average_age
-    end
+    return unless cars && cars.any?
+  
+    total_mileage = cars.sum(&:mileage)
+    average_car_milage = total_mileage / cars.size if total_mileage.positive?
+  
+    separate_number_with_dots(average_car_milage)
   end
   
+  def average_car_age(cars)
+    return "No data" unless cars && cars.any?
+  
+    current_year = Date.today.year
+    total_cars_age = cars.sum { |car| current_year - car.model_year }
+  
+    counter = cars.count
+    average_age = (counter > 0) ? (total_cars_age / counter) : 0
+  end
 
   def set_car 
     @car = Car.find(params[:id])
@@ -211,7 +222,7 @@ class CarsController < ApplicationController
 
       car_option_attributes: [
         :exterior_color, :interior_color, :motricity, :gearbox, :vehicle_type,
-        :model, :door_number, :modifications, :interior_material, :exterior_material, :original, :specifications
+        :model, :door_number, :specifications, interior_material: [], exterior_material: [], 
       ],
 
       insurance_attributes: [
@@ -231,30 +242,30 @@ class CarsController < ApplicationController
   end
 
   def insurance_params
-    params.require(:car).require(:insurance_attributes).permit(
+    params.require(:car).permit(:insurance_attributes).permit(
       :assurance_type, :assured_until, :assurance_price, :assurance_company
     )
   end
 
   def maintainance_params
-    params.require(:car).require(:maintainance_attributes).permit(
+    params.require(:car).permit(:maintainance_attributes).permit(
       :maintainance_costs, :maintainance_needed, :drivable, :accidented,
       :major_issues, :maintainance_periodicity, :repair_company, :last_repair_date
     )
   end
 
   def technical_control_params
-    params.require(:car).require(:technical_control_attributes).permit(
+    params.require(:car).permit(:technical_control_attributes).permit(
       :technical_control_frequency, :technical_control_price, :control_company,
       :counter_visit_at_last_control, :issues_encountered, :valid_until
     )
   end
 
   def car_option_params
-    params.require(:car).require(:car_option_attributes).permit(
+    params.require(:car).permit(:car_option_attributes).permit(
       :exterior_color, :interior_color, :motricity, :gearbox, :vehicle_type,
       :model, :door_number, :modifications, :modified, :original, :specifications,
-      :leather_interior, specific_material: []
+      :leather_interior, interior_material: [], exterior_material: []
     )
   end
 end

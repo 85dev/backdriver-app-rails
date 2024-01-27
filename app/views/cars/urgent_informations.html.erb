@@ -1,20 +1,72 @@
 <div class="global-primary-container">
     <h1> Urgent informations </h1>
-    <h3>Maintainance</h3>
-    <div class="primary-center">
-    <p> Cars which have not been maintained since 3 years at least : </p>
-    <% if @unmaintained_cars %>
-        <table>
-            <thead>
-                <tr>
-                <th>Model</th>
-                <th class="align-items">Last Maintenance Date 
-                    
-                        <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div></th>
-                </tr>
-            </thead>
-                <tbody>
-                    <% @unmaintained_cars.each_with_index do |car, index| %>
+    <div class="table-grid">
+        <div class="table-container">
+           <div class="flex-start">
+                <%= image_tag("icon-engine.svg", class:"primary-illustration") %>
+                <h3>Maintainance</h3>
+            </div>
+        <p> Cars which have not been maintained since 3 years at least : </p>
+        <% if @unmaintained_cars %>
+        <div class="flex-start-warning">
+                <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
+                <p><%= @unmaintained_cars.count %> cars need a maintainance.</p>
+        </div>
+            <table>
+                <thead>
+                    <tr>
+                    <th>Model</th>
+                    <th class="align-items">Last Maintenance Date </th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        <% @unmaintained_cars.each_with_index do |car, index| %>
+                            <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
+                                <td><%= car.model_specific_name %></td>
+                                <td><%= car.maintainance.last_repair_date %></td>
+                                <td class="icon-cell">
+                                <div class="primary-button">
+                                    <%= link_to "Show", car_path(car.id), style: "text-decoration: none; color: black;"%>
+                                </div>
+                                </td>
+                                <td class="icon-cell">
+                                <div class="primary-button">
+                                    <%= link_to "Edit", edit_car_path(car.id), style: "text-decoration: none; color: black;" %>
+                                </div>
+                                </td>
+                            </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        <% else %>
+            <p><strong>No cars unmaintained since 3 years or longer</strong></p>
+        <% end %>
+        </div>
+
+    <div class="table-container">
+        <div class="flex-start">
+                <%= image_tag("icon-repair.svg", class:"primary-illustration") %>
+                <h3>Technical inspection </h3>
+            </div>
+        <p> Cars with invalid technical inspections : </p>
+        <% if @invalid_cars %>
+           <div class="flex-start-warning">
+                <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
+                <% if @invalid_cars.count == 1 %>
+                    <p><%= @invalid_cars.count %> car has no valid inspection.</p>
+                    <% else %>
+                    <p><%= @invalid_cars.count %> cars don't have a valid inspection.</p>
+                <% end %>
+            </div>
+                <table>
+                    <thead>
+                        <tr>
+                        <th>Model</th>
+                        <th class="align-items">Invalid since </div></th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        <% @invalid_cars.each_with_index do |car, index| %>
                         <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
                             <td><%= car.model_specific_name %></td>
                             <td><%= car.maintainance.last_repair_date %></td>
@@ -29,40 +81,53 @@
                             </div>
                             </td>
                         </tr>
-                <% end %>
-            </tbody>
-        </table>
-    <% else %>
-        <p><strong>No cars unmaintained since 3 years or longer</strong></p>
-    <% end %>
-    </div>
-  <h3>Technical control</h3>
-  <p> Cars with invalid technical inspections : </p>
-        <table>
-            <thead>
-                <tr>
-                <th>Model</th>
-                <th class="align-items">Invalid since <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div></th>
-                </tr>
-            </thead>
-                <tbody>
-                <% @invalid_cars.each_with_index do |car, index| %>
-                <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
-                    <td><%= car.model_specific_name %></td>
-                    <td><%= car.maintainance.last_repair_date %></td>
-                    <td class="icon-cell">
-                    <div class="primary-button">
-                        <%= link_to "Show", car_path(car.id), style: "text-decoration: none; color: black;"%>
-                    </div>
-                    </td>
-                    <td class="icon-cell">
-                    <div class="primary-button">
-                        <%= link_to "Edit", edit_car_path(car.id), style: "text-decoration: none; color: black;" %>
-                    </div>
-                    </td>
-                </tr>
+                    <% end %>
+                    </tbody>
+                </table>
             <% end %>
-            </tbody>
-        </table>
-  <h3>Insurance</h3>
+        </div>
+
+  <div class="table-container">
+        <div class="flex-start">
+                <%= image_tag("icon-administrative.svg", class:"primary-illustration") %>
+                <h3>Insurance </h3>
+            </div>
+        <p> Cars with invalid technical inspections : </p>
+        <% if @uninsured_cars %>
+           <div class="flex-start-warning">
+                <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
+                <% if @uninsured_cars.count == 1 %>
+                    <p><%= @uninsured_cars.count %> car is not insured.</p>
+                    <% else %>
+                    <p><%= @uninsured_cars.count %> cars are not insured.</p>
+                <% end %>
+            </div>
+                <table>
+                    <thead>
+                        <tr>
+                        <th>Model</th>
+                        <th class="align-items">Invalid since </div></th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        <% @uninsured_cars.each_with_index do |car, index| %>
+                        <tr class="<%= index.odd? ? 'row-odd' : 'row-even' %>">
+                            <td><%= car.model_specific_name %></td>
+                            <td><%= car.maintainance.last_repair_date %></td>
+                            <td class="icon-cell">
+                            <div class="primary-button">
+                                <%= link_to "Show", car_path(car.id), style: "text-decoration: none; color: black;"%>
+                            </div>
+                            </td>
+                            <td class="icon-cell">
+                            <div class="primary-button">
+                                <%= link_to "Edit", edit_car_path(car.id), style: "text-decoration: none; color: black;" %>
+                            </div>
+                            </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            <% end %>
+        </div>
 </div>

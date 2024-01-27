@@ -4,8 +4,12 @@ Rails.application.routes.draw do
     get 'actions', on: :collection
     get 'urgent_informations', on: :collection
     get 'repairs', on: :collection
+    get 'search_by_model', on: :collection
+    get 'before_destroy', on: :collection
+    get 'add_trip', on: :collection
     resources :journeys 
     resources :car_options
+    resources :repairs
   end
 
   devise_for :users

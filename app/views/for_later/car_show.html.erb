@@ -1,0 +1,41 @@
+            <div class="secondary-container">
+                <%= link_to "Did you sell this #{@car.model_specific_name}",
+                            '#',
+                            class: 'thirdary-button',
+                            onclick: 'openModal(); return false;' %>
+                <% content_for :modal_content_sell do %>
+                    <%= form_with(model: @car, url: car_path(@car), method: :delete) do |f| %>
+                    <div class="primary-centered">
+                        <div class="field">
+                        <%= f.label :selling_price, "Did you sell the car? If yes, please write the price:" %>
+                        </div>
+                        <div class="field">
+                        <%= f.number_field :selling_price, placeholder: 15000, required: true %>
+                        </div>
+                        <%= f.submit "Delete", style: "text-decoration:none; color:black;", class: "thirdary-button" %>
+                    </div>
+                    <% end %>
+                <% end %>
+            </div>
+
+            <!-- ADDING TRIP MODAL -->
+
+            <div class="secondary-container">
+                <%= link_to "Add a trip",
+                            '#',
+                            class: 'thirdary-button',
+                            onclick: 'openModal(); return false;' %>
+                <% content_for :modal_content_trip do %>
+                    <%= form_with(model: Journey.new, url: car_journeys_path(car_id: @car.id), method: :post) do |f| %>
+                    <div class="primary-centered">
+                        <div class="field">
+                        <%= f.label :selling_price, "Did you sell the car? If yes, please write the price:" %>
+                        </div>
+                        <div class="field">
+                        <%= f.number_field :selling_price, placeholder: 15000, required: true %>
+                        </div>
+                        <%= f.submit "Delete", style: "text-decoration:none; color:black;", class: "thirdary-button" %>
+                    </div>
+                    <% end %>
+                <% end %>
+            </div>

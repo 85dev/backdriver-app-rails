@@ -25,9 +25,12 @@
   <% end %>
 
   <div class="actions">
-    <button class="primary-button" <%= f.submit "Log in" %> Log in
+    <button class="thirdary-button" <%= f.submit "Log in" %> Log in
   </div>
 <% end %>
 </div>
 
-<%= render "devise/shared/links" %>
+<div class="primary-container"">
+  <h4 style="margin-bottom: -4.8em;">Don't have an account ? </h4>
+  <%= render "devise/shared/links" %>
+</div>
