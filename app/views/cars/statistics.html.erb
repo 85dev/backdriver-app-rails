@@ -1,6 +1,12 @@
 <div class="global-secondary-container" style="margin-bottom:6em">
     <h1> Statistics </h1>
     <div class="width-container">
+
+        <div class="title-with-image">
+            <%= image_tag("icon-statistics!.svg", class:"car-chart-icon") %>
+            <h1>Global statistics</h1>
+         </div>
+
         <div class="grid-statistics-container">
         
             <div class="grid-card">
@@ -37,9 +43,9 @@
 
             <div class="grid-card">
                 <div class="grid-card-content">
-                    <p>Total maintenance costs for <%= @yearly_date %>:
+                    <p>Car(s) to sell :
                     <h4 class="statistics">
-                        <%= @last_year_maintenance_costs.present? ? "#{@last_year_maintenance_costs} €" : "No data" %>
+                        <%= @cars.present? ? Car.where(to_sell: true).count : "No cars to sell" %>
                     </h4>
                     </p>
                 </div>
@@ -54,10 +60,28 @@
             </div>
         </div>
 
-        <div class="chart-container">
-        <h3>Cars by brand</h3>
-            <%= pie_chart @cars.group(:brand).count, donut: true, label: 'Brand' %>
-        </div>
+        <div class="title-with-image">
+            <%= image_tag("icon-charts!.svg", class:"car-chart-icon") %>
+            <h1>Charts</h1>
+         </div>
+
+           <% if Journey.any? %>
+            <div class="chart-cake">
+                <div class="chart-half">
+                        <h3>Trip Frequency</h3>
+                        <%= line_chart Journey.all.group_by_week(:date).count, label: "Trip frequency" %>
+                </div>
+
+                <div class="chart-half">
+                    <h3>Cars by brand</h3>
+                    <%= bar_chart @cars.group(:brand).count, donut: true, label: 'Brand' %>
+                </div>
+            </div>
+            <%else%>
+            <div class="secondary-container">
+                <p> Not enough data available. Add some more cars to discover statistics. </p>
+            </div>
+        <% end %>
     </div>
 </div>
 </div>

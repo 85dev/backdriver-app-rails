@@ -4,7 +4,7 @@
         <% if current_user.avatar.key.present? %>
           <%= cl_image_tag(current_user.avatar.key, :width=>200, :height=>200, :gravity=>"faces", :crop=>"fill", class:"rounded-image") %>
           <% else %>
-          <%= image_tag('icon-user.svg') %>
+          <%= image_tag('icon-user!.svg', style:'width: 4em;') %>
         <% end %>
       </div>
     <div class="primary-container" style="margin-top: -1em;">

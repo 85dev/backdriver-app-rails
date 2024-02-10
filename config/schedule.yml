@@ -1,0 +1,5 @@
+HardJob - Technical Inspection:
+  cron: "*/1 * * * *"
+  class: "HardJob"
+  args:
+    - :perform_mail_for_technical_inspection

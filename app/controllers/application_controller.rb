@@ -17,9 +17,8 @@ class ApplicationController < ActionController::Base
         user.cars.each do |car|
           notifications_count += 1 if car.technical_control.valid_until < Date.current
           notifications_count += 1 if car.insurance.assured_until < Date.current 
-          notifications_count += 1 if car.maintainance.last_repair_date < (Date.current - 3)
+          notifications_count += 1 if car.maintainance.last_repair_date < (Date.current.year - 3)
         end
-    
         return notifications_count
     end
 

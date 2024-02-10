@@ -6,11 +6,11 @@
                 <%= image_tag("icon-engine.svg", class:"primary-illustration") %>
                 <h3>Maintainance</h3>
             </div>
-        <p> Cars which have not been maintained since 3 years at least : </p>
-        <% if @unmaintained_cars %>
+        <p> Cars which have not been maintained since 3 years at least and cars that you want to maintain as soon as possible : </p>
+        <% if @unmaintained_cars.present? %>
         <div class="flex-start-warning">
                 <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
-                <p><%= @unmaintained_cars.count %> cars need a maintainance.</p>
+                <p><%= @unmaintained_cars.count %> car(s) need(s) a maintainance.</p>
         </div>
             <table>
                 <thead>
@@ -39,7 +39,10 @@
                 </tbody>
             </table>
         <% else %>
-            <p><strong>No cars unmaintained since 3 years or longer</strong></p>
+            <div class="primary-centered">
+                <%= image_tag('icon-valid', class:'small-icon') %>
+                <p>No cars need a maintainance.</p>
+            </div>
         <% end %>
         </div>
 
@@ -49,7 +52,7 @@
                 <h3>Technical inspection </h3>
             </div>
         <p> Cars with invalid technical inspections : </p>
-        <% if @invalid_cars %>
+        <% if @invalid_cars.present? %>
            <div class="flex-start-warning">
                 <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
                 <% if @invalid_cars.count == 1 %>
@@ -84,6 +87,11 @@
                     <% end %>
                     </tbody>
                 </table>
+                <% else %>
+                <div class="primary-centered">
+                    <%= image_tag('icon-valid', class:'small-icon') %>
+                    <p>No cars need technical inspection.</p>
+                </div>
             <% end %>
         </div>
 
@@ -93,7 +101,7 @@
                 <h3>Insurance </h3>
             </div>
         <p> Cars with invalid technical inspections : </p>
-        <% if @uninsured_cars %>
+        <% if @uninsured_cars.present? %>
            <div class="flex-start-warning">
                 <div class="secondary-icon"> <%= image_tag("icon-warnings-content.svg") %> </div>
                 <% if @uninsured_cars.count == 1 %>
@@ -128,6 +136,11 @@
                     <% end %>
                     </tbody>
                 </table>
+                 <% else %>
+                <div class="primary-centered">
+                    <%= image_tag('icon-valid', class:'small-icon') %>
+                    <p>No cars need to be insured.</p>
+                </div>
             <% end %>
         </div>
 </div>

@@ -12,7 +12,7 @@
         <% end %>
           <div class="navbar-icon-notification">
             <%= link_to image_tag("icon-warnings-content.svg"), urgent_informations_cars_path %> 
-              <% if @user_notification %>
+              <% if @user_notification != 0 %>
                 <div class="notification-chip">
                   <%=link_to(urgent_informations_cars_path, style: "text-decoration: none") do %>
                     <%= @user_notification %> <!-- Replace with the actual count of notifications -->
@@ -25,17 +25,11 @@
       <% end %>
     </div>
     <div class="navbar-part">
-    <% if current_user.avatar.key %>
-      <div class="user-image-container">
-        <%= link_to cl_image_tag(current_user.avatar.key, class: "navbar-user-image"), edit_user_registration_path %> 
-      </div>
-    <% else %>
-          <div class="navbar-icon">
-            <%= link_to image_tag("icon-user.svg"), edit_user_registration_path %> 
-          </div>
-    <% end %>
       <div class="navbar-icon">
-        <%= link_to image_tag("icon-sign_out2.svg"), users_sign_out_path %>
+        <%= link_to image_tag("icon-user!.svg"), edit_user_registration_path %> 
+      </div>
+      <div class="navbar-icon">
+        <%= link_to image_tag("icon-sign-out!.svg"), users_sign_out_path %>
       </div> 
     </div>
   </div>

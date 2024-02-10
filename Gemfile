@@ -86,3 +86,5 @@ gem "groupdate", "~> 6.4"
 gem "flatpickr", "~> 4.6"
 
 gem "cloudinary", "~> 1.28"
+
+gem 'sidekiq'

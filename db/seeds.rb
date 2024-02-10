@@ -6,9 +6,20 @@ Insurance.destroy_all
 Maintainance.destroy_all
 CarOption.destroy_all
 TechnicalControl.destroy_all
+Journey.destroy_all
 Car.destroy_all
 
 user = User.first
+
+pictures = [
+  "../app/assets/web-images/208.jpg", 
+  "../app/assets/web-images/911_997.jpg", 
+  "../app/assets/web-images/audi_s8.jpg", 
+  "../app/assets/web-images/BMW_528i.jpg",
+  "../app/assets/web-images/fiorano.jpg",
+  "../app/assets/web-images/gt4.webp",
+  "../app/assets/web-images/maserati4200.jpg"
+]
 
 brands = [
   "Abarth",
@@ -161,7 +172,7 @@ repair_topics = [
 puts "Seeding car models..."
 
 # Seed data for the Car model
-30.times do
+15.times do
   Car.create!(
     user: user,
     brand: brands.sample,
@@ -185,7 +196,8 @@ puts "Seeding car models..."
     numberplate: "QG-#{rand(1..999)}-TR",
     selling_price: rand(10000..200000),
     journey_taken: rand(2000..50000),
-    regularly_maintained: true_or_false.sample
+    regularly_maintained: true_or_false.sample,
+
   )
 end
 
@@ -199,7 +211,6 @@ cars.each do |car|
     maintainance_costs: rand(0..25000),
     maintainance_needed: true_or_false.sample,
     accidented: true_or_false.sample,
-    maintainance_periodicity: Date.new(rand(2010..2025), rand(1..12), rand(1..30)),
     repair_company: brands.sample,
     last_repair_date: Date.new(rand(2010..2025), rand(1..12), rand(1..30)),
   )
@@ -210,9 +221,8 @@ cars.each do |car|
     gearbox: gearboxes.sample,
     exterior_color: ["Blue", "Red", "Green", "Yellow"].sample,
     interior_color: ["Black", "Red", "Green", "Yellow"].sample,
-    modifications: "None",
-    interior_material: ["Alcantara", "Plastic"].sample,
-    exterior_material: ["Aluminium", "Carbon"].sample,
+    interior_material: ["Alcantara", "Plastic", "Leather", "Carbon"].sample(3).to_json,
+    exterior_material: ["Aluminium", "Carbon", "Titane", "Plastic"].sample(3).to_json,
   )
   TechnicalControl.create!(
     car_id: car.id,
@@ -224,7 +234,7 @@ cars.each do |car|
   Insurance.create!(
     car_id: car.id,
     assurance_type: insurances.sample,
-    assured_until: Date.new(rand(2024..2025), rand(9..12), rand(1..30)),
+    assured_until: Date.new(rand(2024..2025), rand(1..12), rand(1..30)),
     assurance_price: rand(300..1200),
     assurance_company: ["Allianz", "AXA", "Matmut", "Crédit Mutuel", "CIC"].sample,
   )
@@ -234,6 +244,12 @@ cars.each do |car|
     repair_company: brands.sample,
     repair_topic: repair_topics.sample(3)
   )
+  15.times do |journey| Journey.create!(
+      car_id: car.id,
+      mileage: rand(10..150),
+      date: Date.new(rand(2024..2025), rand(1..12), rand(1..29))
+    )
+  end
 end
 
 puts 'Seeds successfully created'

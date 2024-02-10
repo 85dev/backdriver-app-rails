@@ -125,6 +125,8 @@ hr {
 /* ALERTS & NOTICES */
 
 .alert {
+   z-index:2;
+   width: 12vw;
    margin: 6em 0em;
    position: fixed;
    font-weight: 500;
@@ -133,11 +135,12 @@ hr {
    padding: 0.4em 0.8em;
    overflow: hidden;
    color: $warning-color;
-   animation: fade-out 4s linear forwards;
+   animation: fade-out 5.2s linear forwards;
    animation-iteration-count: 1;
 }
 
 .notice {
+   z-index:2;
    width: 12vw;
    margin: 6em 0em;
    position: fixed;
@@ -147,7 +150,7 @@ hr {
    padding: 0.4em 0.8em;
    overflow: hidden;
    color: $white-color;
-   animation: fade-out 4s linear forwards;
+   animation: fade-out 5.2s linear forwards;
    animation-iteration-count: 1;
 }
 
@@ -367,7 +370,7 @@ hr {
    background-color: rgba($secondary-background-color, 1);
    color: white;
    border-radius: 0.2em;
-   box-shadow: $box-shadow-primary-color 0px 3px 28px 3px;
+   box-shadow: $box-shadow-primary-color 0px 3px 12px 3px;
    & h3 {
       margin-left: 1em;
       margin-top: 1em;
@@ -552,6 +555,26 @@ hr {
 .chart-container {
    text-align: center;
    margin-bottom: 1.5em;
+}
+
+.chart-cake {
+   padding: 1em 2.2em;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.chart-half {
+   width: 44%;
+   background-color: $secondary-background-color;
+   box-shadow: $box-shadow-primary-color 0px 3px 29px 3px;
+   border-radius: 0.5em;
+   padding: 1em 2em;
+}
+
+.car-chart-icon {
+   width: 2em;
+   padding-right: 0.8em;
 }
 
 .primary-card {
@@ -849,6 +872,9 @@ table {
    margin: 0em 2.5em;
    & h1 {
       font-size: 1.1em;
+   }
+   & .small-icon {
+      margin-right: 0.8em;
    }
 }
 
@@ -1215,6 +1241,10 @@ table {
    width: 1.5em;
    margin: 0.6em;
    cursor: pointer;
+   & :hover {
+      padding-bottom: 0.4em;
+      transition: 0.2s;
+   }
  }
 
  .notification-chip {
@@ -1238,6 +1268,7 @@ table {
  @keyframes fade-out {
    0% {
      opacity: 0;
+     top:-6%;
      left:0%;
    }
    6% {
@@ -1253,6 +1284,7 @@ table {
    100% {
      opacity: 0;
      left: 80%;
+     top:-6%;
  }
 }
 

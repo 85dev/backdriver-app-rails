@@ -2,6 +2,7 @@ require 'date'
 require 'cloudinary'
 
 class CarsController < ApplicationController
+  before_action :set_user
   before_action :set_car, only: [:update, :destroy, :edit, :delete, :show]
   before_action :set_cars, only: [:index, :statistics, :urgent_informations, :repairs, :actions]
 
@@ -15,7 +16,7 @@ class CarsController < ApplicationController
 
   def create
     @car = Car.new(car_params)
-    @car.user_id = current_user.id
+    @car.user_id = @user.id
 
     ActiveRecord::Base.transaction do
       if @car.save
@@ -27,20 +28,26 @@ class CarsController < ApplicationController
   end
 
   def update
-    if @car.update(car_params)
-      redirect_to cars_path, notice: "Car's informations were successfully updated."
-    else
-      render :edit
+    ActiveRecord::Base.transaction do
+      if @car.update(car_params)
+        redirect_to cars_path, notice: "Car's informations were successfully updated."
+      else
+        render :edit
+      end
     end
   end
-
+  
   def edit
+    @car.car_option
+    @car.insurance
+    @car.maintainance
+    @car.technical_control 
   end
 
   def destroy    
     selling_price = params[:car][:selling_price]
 
-    car_history = current_user.car_history
+    car_history = @user.car_history
   
     if car_history.nil?
       CarHistory.create(
@@ -55,31 +62,32 @@ class CarsController < ApplicationController
       )
     end
 
-    @car.destroy
+    @user.car.destroy
     redirect_to cars_url, notice: 'Car was successfully deleted, find the history of your cars in the dedicated window'
   end
 
   def add_trip 
-    @car = Car.find(params[:format])
+    @user.car = Car.find(params[:format])
   end
 
   def before_destroy
-    @car = Car.find(params[:format]) 
+    @user.car = Car.find(params[:format]) 
   end
   
   def index
-    if params[:query].present?
-      @cars = search_by_model(params)
+    if params[:query].present? && @user.cars.present?
+      @cars = search_by_model(params[:query])
       @reset_button = true
     else
-      @cars = Car.all
+      @cars = Car.where(user_id: @user.id)
+      @reset_button = false
     end
   end
 
   def urgent_informations
-    @unmaintained_cars = fetch_unmaintained_cars(@cars)
-    @invalid_cars = fetch_invalid_cars(@cars)
-    @uninsured_cars = fetch_uninsured_cars(@cars)
+    @unmaintained_cars = fetch_unmaintained_cars(@user.cars)
+    @invalid_cars = fetch_invalid_cars(@user.cars)
+    @uninsured_cars = fetch_uninsured_cars(@user.cars)
   end
 
   def show
@@ -92,17 +100,18 @@ class CarsController < ApplicationController
     @interior_materials = JSON.parse(@car.car_option.interior_material)
     @exterior_materials = JSON.parse(@car.car_option.exterior_material)
     @health_score = 80
+    # @journeys_by_cars = fetch_journeys_by_cars(@cars)
     # HEALTH SCORE FUNCTION
   end
 
   def statistics
     @yearly_date = Date.today.year
-    @total_cars_worth = calculate_total_cars_worth(@cars)
-    @cars_number = @cars.count
+    @total_cars_worth = calculate_total_cars_worth(@user.cars)
+    @cars_number = @user.cars.count
     @total_cars_worth_string = separate_number_with_dots(@total_cars_worth)
-    @average_car_mileage = average_car_mileage(@cars)
-    @average_car_age = average_car_age(@cars)
-    @total_insurance_costs = calculate_total_insurance_cost(@cars)
+    @average_car_mileage = average_car_mileage(@user.cars)
+    @average_car_age = average_car_age(@user.cars)
+    @total_insurance_costs = calculate_total_insurance_cost(@user.cars)
   end
 
   def actions 
@@ -113,27 +122,55 @@ class CarsController < ApplicationController
 
   private
 
-  def search_by_model(params)
-    query = params[:query]
-    cars = Car.all
+  def set_user 
+    @user = current_user
+  end
+
+  def search_by_model(query)
+    query = query.downcase
+    cars = Car.where(user_id: @user.id)
+  
+    return if cars.empty?
 
     model_names_with_ids = cars.pluck(:model_specific_name, :id).to_h
     brands_with_ids = cars.pluck(:brand, :id).to_h
-
-    query.downcase!
+  
     model_names_with_ids.transform_keys!(&:downcase)
     brands_with_ids.transform_keys!(&:downcase)
   
     model_results = model_names_with_ids.select { |model_name, _id| model_name.include?(query) }
     matched_ids = model_results.values
-
+  
     brand_results = brands_with_ids.select { |brand, _id| brand.include?(query) }
-    matched_ids << brand_results.values
+    matched_ids.concat(brand_results.values.flatten) unless brand_results.empty?
+
+    return query = nil if matched_ids.empty?
   
     matched_cars = Car.where(id: matched_ids)
     matched_cars.empty? ? nil : matched_cars
   end
   
+
+  def fetch_journeys_by_cars(cars)
+    global_hash = {}
+
+    cars.each do |car|
+      next unless car.journeys.any?
+    
+      car_journeys = { car.id => { car: car, journeys: Journey.where(car_id: car.id).pluck(:id) } }
+      global_hash.merge!(car_journeys)
+    end
+
+    data_for_chart = global_hash.map do |car_id, car_data|
+      {
+        name: car_data[:car].model_specific_name,
+        data: { "Car #{car_id}" => car_data[:journeys].count }
+      }
+    end
+
+    return data_for_chart
+  end
+
 
   def fetch_invalid_cars(cars)
     return unless cars
@@ -146,8 +183,9 @@ class CarsController < ApplicationController
   def fetch_unmaintained_cars(cars)
     return unless cars
   
-    cars.select do |car|
-      car.maintainance.last_repair_date.year <= Date.today.year - 3
+    selected_cars = cars.select do |car|
+      car.maintainance.last_repair_date.year <= Date.today.year - 3 || 
+      car.maintainance.maintainance_needed 
     end
   end
 
