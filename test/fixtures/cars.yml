@@ -1,0 +1,63 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  model_year: 1
+  release_date: 2024-01-05
+  brand: MyString
+  fuel: MyString
+  motricity: 1
+  gearbox: MyString
+  vehicle_type: MyString
+  model: MyString
+  door_number: 1
+  fiscal_power: 1
+  required_licence: MyString
+  din_power: 1
+  horse_power: 1
+  seats: 1
+  acquisition_date: 2024-01-05
+  owners_number: 1
+  tire_size_front: 1
+  tire_size_back: 1
+  mileage: 1
+  purchase_price: 1
+  estimated_value: 1
+  geolocalisation: MyString
+  maintenance_costs_since_purchase: 1
+  maintenance_needed: false
+  drivable: false
+  accidented: false
+  major_issues: MyString
+  to_sell: false
+  last_time_driven: 2024-01-05
+
+two:
+  model_year: 1
+  release_date: 2024-01-05
+  brand: MyString
+  fuel: MyString
+  motricity: 1
+  gearbox: MyString
+  vehicle_type: MyString
+  model: MyString
+  door_number: 1
+  fiscal_power: 1
+  required_licence: MyString
+  din_power: 1
+  horse_power: 1
+  seats: 1
+  acquisition_date: 2024-01-05
+  owners_number: 1
+  tire_size_front: 1
+  tire_size_back: 1
+  mileage: 1
+  purchase_price: 1
+  estimated_value: 1
+  geolocalisation: MyString
+  maintenance_costs_since_purchase: 1
+  maintenance_needed: false
+  drivable: false
+  accidented: false
+  major_issues: MyString
+  to_sell: false
+  last_time_driven: 2024-01-05

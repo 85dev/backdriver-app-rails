@@ -1,0 +1,87 @@
+<div class="global-secondary-container" style="margin-bottom:6em">
+    <h1> Statistics </h1>
+    <div class="width-container">
+
+        <div class="title-with-image">
+            <%= image_tag("icon-statistics!.svg", class:"car-chart-icon") %>
+            <h1>Global statistics</h1>
+         </div>
+
+        <div class="grid-statistics-container">
+        
+            <div class="grid-card">
+            <% if @total_cars_worth > 0 %>
+                <div class="grid-card-content">
+                <p> Total current value : <h4 class="statistics"> <%= @total_cars_worth_string %> € </h4></p>
+                <% end %>
+                </div>
+            </div>
+
+            <div class="grid-card">
+            <% if @cars_number > 0 %>
+                <div class="grid-card-content">
+                <p> Number of cars : <h4 class="statistics"> <%= @cars_number %> </h4></p>
+                </div>
+                <% end %>
+            </div>
+
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p > Average car mileage : <h4 class="statistics"> <%= @average_car_mileage %> km </h4></p>
+                </div>
+            </div>
+            
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p>Average car age:
+                        <h4 class="statistics">
+                            <%= @average_car_age.present? ? "#{@average_car_age} year(s)" : "No data" %>
+                        </h4>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p>Car(s) to sell :
+                    <h4 class="statistics">
+                        <%= @cars.present? ? Car.where(to_sell: true).count : "No cars to sell" %>
+                    </h4>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid-card">
+                <div class="grid-card-content">
+                    <p> Total costs of insurance for <%= @yearly_date %> : 
+                    <h4 class="statistics"> <%= @total_insurance_costs %> € </h4>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="title-with-image">
+            <%= image_tag("icon-charts!.svg", class:"car-chart-icon") %>
+            <h1>Charts</h1>
+         </div>
+
+           <% if Journey.any? %>
+            <div class="chart-cake">
+                <div class="chart-half">
+                        <h3>Trip Frequency</h3>
+                        <%= line_chart Journey.all.group_by_week(:date).count, label: "Trip frequency" %>
+                </div>
+
+                <div class="chart-half">
+                    <h3>Cars by brand</h3>
+                    <%= bar_chart @cars.group(:brand).count, donut: true, label: 'Brand' %>
+                </div>
+            </div>
+            <%else%>
+            <div class="secondary-container">
+                <p> Not enough data available. Add some more cars to discover statistics. </p>
+            </div>
+        <% end %>
+    </div>
+</div>
+</div>

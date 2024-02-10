@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  technical_control_validity_period: 1
+  technical_control_frequency: 1
+  technical_control_price: 9.99
+  control_company: MyString
+  counter_visit_at_last_control: false
+  issues_encountered: MyString
+
+two:
+  car: two
+  technical_control_validity_period: 1
+  technical_control_frequency: 1
+  technical_control_price: 9.99
+  control_company: MyString
+  counter_visit_at_last_control: false
+  issues_encountered: MyString

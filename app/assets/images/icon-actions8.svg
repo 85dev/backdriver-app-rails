@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.89 46.4">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ccc;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #b3b3b3;
+      }
+
+      .cls-3 {
+        fill: #333;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1-2" data-name="Calque 1">
+    <rect class="cls-1" x="-7.98" y="20.83" width="46.4" height="4.75" rx="2" ry="2" transform="translate(38.42 7.98) rotate(90)"/>
+    <rect class="cls-1" x="-19.34" y="20.83" width="46.4" height="4.75" rx="2" ry="2" transform="translate(27.06 19.34) rotate(90)"/>
+    <rect class="cls-1" x="3.38" y="20.83" width="46.4" height="4.75" rx="2" ry="2" transform="translate(3.38 49.78) rotate(-90)"/>
+    <circle class="cls-2" cx="26.58" cy="8.33" r="3.86"/>
+    <circle class="cls-3" cx="26.58" cy="8.33" r="2.47"/>
+    <circle class="cls-2" cx="15.22" cy="35.81" r="3.86"/>
+    <circle class="cls-3" cx="15.22" cy="35.81" r="2.47"/>
+    <rect class="cls-1" x="14.82" y="20.83" width="46.4" height="4.75" rx="2" ry="2" transform="translate(14.82 61.23) rotate(-90)"/>
+    <g>
+      <circle class="cls-2" cx="38.02" cy="29.21" r="3.86"/>
+      <circle class="cls-3" cx="38.02" cy="29.21" r="2.47"/>
+    </g>
+    <circle class="cls-2" cx="3.86" cy="19.85" r="3.86"/>
+    <circle class="cls-3" cx="3.86" cy="19.85" r="2.47"/>
+  </g>
+</svg>

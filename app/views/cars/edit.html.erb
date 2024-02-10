@@ -1,0 +1,307 @@
+<div class="global-primary-container" style="margin-bottom: 6em;">
+    <h1>Update informations for your <%= @car.model_specific_name %> </h1>
+    <%= form_with(model: @car, url: car_path(@car), method: :patch) do |form| %>
+    <div class="primary-container">
+        <div class="form-card">
+
+        <div class="form-container">
+        <h3>Model informations</h3>
+        <%= image_tag("icon-info.svg", class:"primary-illustration") %>
+        </div>
+
+        <!-- Car Details -->
+        <div class="form-container">
+            <p><%= form.label :brand, "Brand : " %></p>
+            <%= form.select :brand, Car::BRAND_OPTIONS, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :model_specific_name, "Model specific name : " %></p>
+            <%= form.text_field :model_specific_name, required: true, placeholder: "4L Trophy Cup" %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :acquisition_date, "Date of acquisition : " %></p>
+             <%= form.date_field :acquisition_date, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :seats, "Seats : " %></p>
+            <%= form.number_field :seats, in: 0..7, placeholder: 5, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :owners_number, "Number of owners : " %></p>
+            <%= form.number_field :owners_number, in: 0..100, placeholder: 2, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :purchase_price, "Purchase price (€) : " %></p>
+            <%= form.number_field :purchase_price, placeholder: 15000, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :last_time_driven, "Last time car was driven : " %></p>
+            <%= form.date_field :last_time_driven, as: :string, input_html: { data: { controller: "datepicker" } }, required: true%>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :to_sell, "To sell (if yes, check): " %></p>
+             <div class="checkbox-wrapper-2">
+              <%= form.check_box :to_sell, class:"sc-gJwTLC ikxBAC" %>
+            </div>
+        </div>
+    </div>
+
+    <%# Administrative infos %>
+    <div class="form-card">
+        <div class="form-container">
+            <h3>Administrative informations</h3>
+            <%= image_tag("icon-administrative", class:"primary-illustration") %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :fiscal_power, "Fiscal power : " %></p>
+            <%= form.number_field :fiscal_power, required: true %>
+        </div>
+
+         <div class="form-container">
+            <p><%= form.label :numberplate, "Numberplate : " %></p>
+            <%= form.text_field :numberplate, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :required_licence, "Required licence : " %></p>
+            <%= form.select :required_licence, Car::LICENCE_OPTIONS, required: true %>
+        </div>
+    </div>
+
+        <%# Technical infos %>
+    <div class="form-card">
+        <div class="form-container">
+            <h3>Technical informations</h3>
+            <%= image_tag("icon-technical", class:"primary-illustration") %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :model_year, "Model's production year : " %></p>
+             <%= form.number_field :model_year, placeholder: 2024, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :fuel, "Energy : " %></p>
+            <%= form.select :fuel, Car::FUEL_OPTIONS, required: true %>        
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :vehicle_type, "Vehicle type : " %></p>
+            <%= form.select :vehicle_type, Car::VEHICLE_TYPE_OPTIONS, required: true %>
+        </div>
+
+          <div class="form-container">
+            <p><%= form.label :journey_taken, "Journeys done (km) : " %></p>
+            <%= form.number_field :journey_taken, placeholder: 1240, required: true %>
+        </div>
+
+         <div class="form-container">
+            <p><%= form.label :horse_power, "Horse power : " %></p>
+            <%= form.number_field :horse_power, placeholder: 160, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :mileage, "Mileage (km) : " %></p>
+            <%= form.number_field :mileage, placeholder: 50000, required: true %>
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :interior_state, "Interior state :" %></p>
+            <%= form.select :interior_state, Car::CAR_CONDITION_STATES %>           
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :exterior_state, "Exterior state :" %></p>
+            <%= form.select :exterior_state, Car::CAR_CONDITION_STATES %>           
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :tires_state, "Tires state :" %></p>
+            <%= form.select :tires_state, Car::TIRE_STATES %>           
+        </div>
+
+        <div class="form-container">
+            <p><%= form.label :regularly_maintained, "Regularly maintained :" %></p>
+            <div class="checkbox-wrapper-2">
+              <%= form.check_box :regularly_maintained, class:"sc-gJwTLC ikxBAC"  %>   
+            </div>          
+        </div>
+    </div>
+
+            <%# Pictures %>
+       <div class="form-card">
+            <div class="form-container">
+                <h3>Images</h3>
+                <%= image_tag("icon-images", class:"primary-illustration") %>
+            </div>
+
+             <div class="form-container">
+                <p><%= form.label :photo, "Pictures : " %></p>
+                <%= form.file_field :photo, required: true %>
+            </div>
+        </div>
+
+        <!-- Car Options -->
+        <div class="form-card">
+            <div class="form-container">
+            <h3>Options</h3>
+            <%= image_tag("icon-car-options", class:"primary-illustration") %>
+            </div>
+
+           <%= form.fields_for :car_option do |car_option_form| %>
+            <div class="form-container">
+                <p><%= car_option_form.label :exterior_color %></p>
+                <%= car_option_form.text_field :exterior_color,  required: true %>
+            </div>
+
+            <div class="form-container">
+                <p><%= car_option_form.label :interior_color %></p>
+                <%= car_option_form.text_field :interior_color,  required: true %>
+            </div>
+
+             <div class="form-container">
+                <p><%= car_option_form.label :motricity %></p>
+                <%= car_option_form.select :motricity, Car::MOTRICITY_OPTIONS,  required: true %>
+            </div>
+
+            <div class="form-container">
+                <p><%= car_option_form.label :gearbox %></p>
+                <%= car_option_form.select :gearbox, Car::GEARBOX_OPTIONS,  required: true %>
+            </div>
+
+            <div class="form-container">
+                <p><%= car_option_form.label :interior_material, "Interior material :" %></p>
+            </div>
+           <div id="form-multiple-select">
+                <% Car::INTERIOR_OPTIONS.each do |option| %>
+                    <div class="checkbox-wrapper-13">
+                    <%= car_option_form.check_box :interior_material, { multiple: true }, option, nil %>
+                    <label for="<%= "car_option_form_interior_material_#{option}" %>"><%= option %></label>
+                    </div>
+                <% end %>
+            </div>
+
+            <div class="form-container">
+            <p><%= car_option_form.label :exterior_material, "Exterior material :"  %></p>
+            </div>
+            <div id="form-multiple-select">
+            <% Car::EXTERIOR_OPTIONS.each do |option| %>
+                <div class="checkbox-wrapper-13">
+                <%= car_option_form.check_box :exterior_material, { multiple: true }, option, nil %>
+                <label for="<%= "car_option_form_exterior_material_#{option}" %>"><%= option %></label>
+                </div>
+            <% end %>
+            </div>
+
+             <div class="form-container">
+                <p><%= car_option_form.label :door_number %></p>
+                <%= car_option_form.number_field :door_number, in: 0..7, placeholder: 5, required: true %>
+            </div>
+        </div>
+         <%end%>
+
+        <!-- Insurance -->
+        <div class="form-card">
+            <div class="form-container">
+                <h3>Insurance</h3>
+                <%= image_tag("icon-administrative.svg", class:"primary-illustration") %>
+            </div>
+
+             <%= form.fields_for :insurance do |insurance_form| %>
+                <div class="form-container">
+                    <p><%= insurance_form.label :assurance_type, "Insurance type : " %></p>
+                    <%= insurance_form.select :assurance_type, Car::INSURANCE_OPTIONS, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= insurance_form.label :assured_until, "Insured until : " %></p>
+                    <%= insurance_form.date_field :assured_until, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= insurance_form.label :assurance_price, "Insurance price (yearly): " %></p>
+                    <%= insurance_form.number_field :assurance_price, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= insurance_form.label :assurance_company, "Insurance company : " %></p>
+                    <%= insurance_form.text_field :assurance_company, required: true %>
+                </div>
+            <% end %>
+        </div>
+
+        <!-- Maintenance -->
+        <div class="form-card">
+            <div class="form-container">
+                <h3>Maintainance</h3>
+                <%= image_tag("icon-health.svg", class:"primary-illustration") %>
+            </div>
+             <%= form.fields_for :maintainance do |maintainance_form| %>
+
+                <div class="form-container">
+                    <p><%= maintainance_form.label :accidented, "Accidented : " %></p>
+                    <div class="checkbox-wrapper-2">
+                    <%= maintainance_form.check_box :accidented, class:"sc-gJwTLC ikxBAC", default: false %>
+                    </div>
+                </div>
+
+
+                <div class="form-container">
+                    <p><%= maintainance_form.label :maintainance_needed, "Maintainance needed " %></p>
+                    <div class="checkbox-wrapper-2">
+                    <%= maintainance_form.check_box :maintainance_needed, class:"sc-gJwTLC ikxBAC", default: false %>
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <p><%= maintainance_form.label :last_repair_date, "Last maintainance done : " %></p>
+                    <%= maintainance_form.date_field :last_repair_date, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %>
+                </div>
+
+            <% end %>
+        </div>
+        
+        <!-- Technical Controls -->
+        <div class="form-card" style="margin-bottom: 2em;">
+            <div class="form-container">
+                <h3>Technical Inspection</h3>
+                <%= image_tag("icon-repair.svg", class:"primary-illustration") %>
+            </div>
+                <%= form.fields_for :technical_control do |technical_control_form| %>
+
+                <div class="form-container">
+                    <p><%= technical_control_form.label :technical_control_frequency, "Technical control frequency (years) :" %></p>
+                    <%= technical_control_form.number_field :technical_control_frequency, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= technical_control_form.label :technical_control_price, "Price : " %></p>
+                    <%= technical_control_form.number_field :technical_control_price, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= technical_control_form.label :control_company, "Control company : " %></p>
+                    <%= technical_control_form.text_field :control_company, required: true %>
+                </div>
+
+                <div class="form-container">
+                    <p><%= technical_control_form.label :valid_until, "Valid until : " %></p>
+                    <%= technical_control_form.date_field :valid_until, as: :string, input_html: { data: { controller: "datepicker" } }, required: true %>
+                </div>
+
+            <% end %>
+        </div>
+            <%= form.submit 'Update', class:"thirdary-button", role:"button", style: "text-decoration:none; color:white;" %>
+        <% end %>
+    </div>
+  </div>
+
+</div>
